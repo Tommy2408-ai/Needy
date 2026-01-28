@@ -1,0 +1,15 @@
+# Ignora file di sistema
+.DS_Store
+Thumbs.db
+.vs/
+
+# BACKEND: Ignora dati e file binari
+Backend/pb_data/
+Backend/pb_migrations/
+Backend/pocketbase.exe
+Backend/LICENSE.md
+Backend/CHANGELOG.md
+
+# APP: Ignora file temporanei (per il futuro)
+App/bin/
+App/obj/
