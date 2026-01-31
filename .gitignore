@@ -10,6 +10,8 @@ Backend/pocketbase.exe
 Backend/LICENSE.md
 Backend/CHANGELOG.md
 
-# APP: Ignora file temporanei (per il futuro)
-App/bin/
-App/obj/
+# IGNORA I FILE TEMPORANEI OVUNQUE SI TROVINO
+**/bin/
+**/obj/
+**/.vs/
+*.user
