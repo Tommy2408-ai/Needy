@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Needy.Views.LoginPage"
+             BackgroundColor="#F5F5F5"
+             Title="Accedi a Needy">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="25" Padding="30" VerticalOptions="Center">
+            
+            <!-- LOGO O TITOLO (Grande e leggibile) -->
+            <Image Source="dotnet_bot.png" HeightRequest="150" HorizontalOptions="Center"/>
+
+            <Label Text="Benvenuto in Needy" FontSize="28" FontAttributes="Bold" TextColor="#333333" HorizontalOptions="Center"/>
+
+            <Label Text="La comunità che ti aiuta." FontSize="18" TextColor="#666666" HorizontalOptions="Center" Margin="0,-15,0,20"/>
+            
+            <!-- CAMPI DI INSERIMENTO (Grandi per facilitare il tocco) -->
+            <Border Stroke="#CCCCCC" StrokeThickness="1" StrokeShape="RoundRectangle 10" Padding="5">
+                <Entry Placeholder="Inserisci la tua Email" Keyboard="Email" FontSize="18" BackgroundColor="White" TextColor="Black"/>
+            </Border>
+
+            <Border Stroke="#CCCCCC" StrokeThickness="1" StrokeShape="RoundRectangle 10" Padding="5">
+                <Entry Placeholder="Inserisci la Password" IsPassword="True" FontSize="18" BackgroundColor="White" TextColor="Black"/>
+            </Border>
+            
+            <!-- BOTTONE ENTRA (Colore primario e ben visibile) -->
+            <Button Text="ENTRA" FontAttributes="Bold" FontSize="20" HeightRequest="60" CornerRadius="10" BackgroundColor="#2196F3" TextColor="White" Margin="0,20,0,0"/>
+            
+            <!-- REGISTRAZIONE -->
+            <Label Text="Non hai un account? Registrati" FontSize="16" TextColor="#2196F3" HorizontalOptions="Center" TextDecorations="Underline"/>
+            
+        </VerticalStackLayout>
+    </ScrollView>
+    
+</ContentPage>
