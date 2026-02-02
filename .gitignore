@@ -10,6 +10,10 @@ Backend/pocketbase.exe
 Backend/LICENSE.md
 Backend/CHANGELOG.md
 
+# IGNORA CARTELLA DI VS COPILOT
+App/Needy/.github/
+
+
 # IGNORA I FILE TEMPORANEI OVUNQUE SI TROVINO
 **/bin/
 **/obj/
