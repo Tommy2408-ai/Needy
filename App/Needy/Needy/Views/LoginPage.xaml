@@ -17,19 +17,21 @@
             
             <!-- CAMPI DI INSERIMENTO (Grandi per facilitare il tocco) -->
             <Border Stroke="#CCCCCC" StrokeThickness="1" StrokeShape="RoundRectangle 10" Padding="5">
-                <Entry Placeholder="Inserisci la tua Email" Keyboard="Email" FontSize="18" BackgroundColor="White" TextColor="Black"/>
+                <Entry x:Name="EmailEntry" Placeholder="Inserisci la tua Email" Keyboard="Email" FontSize="18" BackgroundColor="White" TextColor="Black"/>
             </Border>
 
             <Border Stroke="#CCCCCC" StrokeThickness="1" StrokeShape="RoundRectangle 10" Padding="5">
-                <Entry Placeholder="Inserisci la Password" IsPassword="True" FontSize="18" BackgroundColor="White" TextColor="Black"/>
+                <Entry x:Name="PasswordEntry" Placeholder="Inserisci la Password" IsPassword="True" FontSize="18" BackgroundColor="White" TextColor="Black"/>
             </Border>
             
-            <!-- BOTTONE ENTRA (Colore primario e ben visibile) -->
-            <Button Text="ENTRA" FontAttributes="Bold" FontSize="20" HeightRequest="60" CornerRadius="10" BackgroundColor="#2196F3" TextColor="White" Margin="0,20,0,0"/>
+            <!-- BOTTONE ENTRA-->
+            <Button x:Name="LoginButton" Text="ENTRA" Clicked="OnLoginButtonClicked" FontAttributes="Bold" FontSize="20" HeightRequest="60" CornerRadius="10" BackgroundColor="#2196F3" TextColor="White" Margin="0,20,0,0"/>
             
             <!-- REGISTRAZIONE -->
             <Label Text="Non hai un account? Registrati" FontSize="16" TextColor="#2196F3" HorizontalOptions="Center" TextDecorations="Underline"/>
             
+            <!-- Messaggio di Errore (Invisibile all'inizio)-->
+            <Label x:Name="ErrorLabel" Text="Credenziali errate o account non approvato." TextColor="Red" IsVisible="False" HorizontalOptions="Center" FontAttributes="Bold"/>
         </VerticalStackLayout>
     </ScrollView>
     
