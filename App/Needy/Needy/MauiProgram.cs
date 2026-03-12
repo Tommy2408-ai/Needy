@@ -17,6 +17,11 @@ namespace Needy
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
+            // Diciamo all'app che esiste la pagina di Login
+            builder.Services.AddTransient<LoginPage>();
+
+            // AGGIUNGI QUESTA RIGA: Diciamo all'app che esiste anche la HomePage
+            builder.Services.AddTransient<HomePage>();
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif

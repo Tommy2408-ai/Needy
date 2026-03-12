@@ -41,7 +41,6 @@ namespace Needy.Views
                 // AZIONE 2: LA CHIAMATA
                 // Usiamo <Needy.Models.User> per dire a PocketBase di trasformare i dati
                 // direttamente nella classe
-                // NOTA: Se ti dà errore rosso su <Needy.Models.User>, toglilo, ma di solito questa libreria lo supporta.
                 var authData = await _pb.User.AuthenticateWithPasswordAsync(email, password);
 
                 // AZIONE 3: IL SEMAFORO
@@ -56,9 +55,13 @@ namespace Needy.Views
                 if (utenteLoggato != null && utenteLoggato.Record.Verified == true)
                 {
                     // VERDE! L'Admin lo ha accettato.
-                    await DisplayAlert("Benvenuto", $"Accesso eseguito con successo, {utenteLoggato.Record.Username}!", "OK");
+                    //await DisplayAlert("Benvenuto", $"Accesso eseguito con successo, {utenteLoggato.Record.Username}!", "OK");
 
-                    // TODO: Salvare il Token in SecureStorage e andare alla Home
+                    // 1. Salviamo il Token segreto nella cassaforte del telefono
+                    await SecureStorage.Default.SetAsync("auth_token", _pb.AuthStore.Token);
+
+                    // 2. Cambiamo pagina! Buttiamo giù il Login e carichiamo la Home
+                    Application.Current.MainPage = new HomePage(_pb);
                 }
                 else
                 {
