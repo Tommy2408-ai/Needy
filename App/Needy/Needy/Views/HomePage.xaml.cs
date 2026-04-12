@@ -20,6 +20,20 @@ public partial class HomePage : ContentPage
 		SecureStorage.Default.Remove("auth_token");
 
 		// 3. Rimandiamo l'utente alla pagina di Login
-		Application.Current.MainPage = new LoginPage(_pb);
+		Application.Current.MainPage = new NavigationPage(new LoginPage(_pb));
+	}
+
+	private async void OnNuovaRichiestaClicked(object sender, EventArgs e)
+	{
+		// Assicuriamo che Navigation sia disponibile
+		if (Navigation != null && Navigation.NavigationStack.Count > 0)
+		{
+			await Navigation.PushAsync(new NuovaRichiestaPage(_pb));
+		}
+		else
+		{
+			// Fallback: Sostituisci il MainPage se Navigation non è disponibile
+			Application.Current.MainPage = new NavigationPage(new NuovaRichiestaPage(_pb));
+		}
 	}
 }

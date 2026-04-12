@@ -23,7 +23,7 @@ namespace Needy
         protected override Window CreateWindow(IActivationState? activationState)
         {
             // Creiamo la "Finestra" dell'app mettendoci dentro il Login come base
-            var window = new Window(new LoginPage(_pb));
+            var window = new Window(new NavigationPage(new LoginPage(_pb)));
 
             // Lanciamo il controllo della cassaforte passando la finestra
             CheckToken(window);
@@ -48,7 +48,7 @@ namespace Needy
                     MainThread.BeginInvokeOnMainThread(() =>
                     {
                         // Sostituiamo la pagina dentro la finestra
-                        window.Page = new HomePage(_pb);
+                        window.Page = new NavigationPage(new HomePage(_pb));
                     });
                 }
             }

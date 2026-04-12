@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Needy.Views.NuovaRichiestaPage"
+             Title="Chiedi Aiuto"
+             BackgroundColor="#F5F5F5">
+
+    <ScrollView Padding="20">
+        <VerticalStackLayout Spacing="20">
+            
+            <Label 
+            Text="Di cosa hai bisogno?"
+                FontSize="24"
+                FontAttributes="Bold"
+                TextColor="#333333"/>
+            
+            <!-- TITOLO -->
+            <Label Text="Titolo" FontAttributes="Bold"/>
+            <Border Stroke="#CCCCCC" StrokeThickness="1" StrokeShape="RoundRectangle 8" Padding="5">
+                <Entry x:Name="TitoloEntry"
+                       Placeholder="Es. Spesa al supermercato"
+                       BackgroundColor="White"
+                       TextColor="Black"/>
+            </Border>
+            
+            <!-- CATEGORIA -->
+            <Label Text="Categoria" FontAttributes="Bold"/>
+            <Border Stroke="#CCCCCC" StrokeThickness="1" StrokeShape="RoundRectangle 8" Padding="5">
+                <Picker x:Name="CategoriaPicker" BackgroundColor="White" TextColor="Black">
+                    <Picker.Items>
+                        <x:String>Spesa</x:String>
+                        <x:String>Compagnia</x:String>
+                        <x:String>Tech</x:String>
+                        <x:String>Casa</x:String>
+                    </Picker.Items>
+                </Picker>
+            </Border>
+            
+            <!-- DESCRIZIONE -->
+            <Label Text="Descrizione dettagliata" FontAttributes="Bold"/>
+            <Border Stroke="#CCCCCC" StrokeThickness="1" StrokeShape="RoundRectangle 8" Padding="5">
+                <Editor x:Name="DescrizioneEditor"
+                        Placeholder="Scrivi qui i dettagli (es. la lista della spesa o l'orario in cui ci sei)..."
+                        HeightRequest="120"
+                        BackgroundColor="White"
+                        TextColor="Black"/>
+            </Border>
+            
+            <!-- DURATA STIMATA -->
+            <Label Text="Durata stimata (in ore)" FontAttributes="Bold"/>
+            <Border Stroke="#CCCCCC" StrokeThickness="1" StrokeShape="RoundRectangle 8" Padding="5">
+                <Entry x:Name="DurataEntry"
+                       Keyboard="Numeric"
+                       Placeholder="Es. 1"
+                       BackgroundColor="White"
+                       TextColor="Black"/>
+            </Border>
+            
+            <!-- MESSAGGIO ERRORE/SUCCESSO -->
+            <Label x:Name="StatusLabel" IsVisible="False" FontAttributes="Bold" HorizontalOptions="Center"/>
+            
+            <!-- BOTTONE -->
+            <Button x:Name="PubblicaButton"
+                    Text="PUBBLICA RICHIESTA"
+                    Clicked="OnPubblicaClicked"
+                    BackgroundColor="#4CAF50"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    FontSize="18"
+                    HeightRequest="55"
+                    CornerRadius="8"
+                    Margin="0,20,0,0"/>
+            
+        </VerticalStackLayout>
+    </ScrollView>
+    
+</ContentPage>

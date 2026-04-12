@@ -22,6 +22,8 @@ namespace Needy
 
             // AGGIUNGI QUESTA RIGA: Diciamo all'app che esiste anche la HomePage
             builder.Services.AddTransient<HomePage>();
+
+            builder.Services.AddTransient<NuovaRichiestaPage>();
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif
