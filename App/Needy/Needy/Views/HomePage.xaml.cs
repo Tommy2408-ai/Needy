@@ -67,5 +67,23 @@ namespace Needy.Views
 				Application.Current.MainPage = new NavigationPage(new NuovaRichiestaPage(_pb));
 			}
 		}
+
+		private async void OnRichiestaTapped(object sender, TappedEventArgs e)
+		{
+			// 1. Capiamo quale "Card" (Frame) è stata toccata dal dito dell'utente
+			var frameCliccato = (Frame)sender;
+
+			// 2. Estraiamo i dati (la Richiesta) che MAUI aveva collegato a questa specifica Card
+			var richiestaSelezionata = frameCliccato.BindingContext as Richiesta;
+
+			// 3. Se abbiamo i dati, partiamo per i Dettagli
+			if (richiestaSelezionata != null)
+			{
+				await frameCliccato.FadeTo(0.5, 100);
+				await frameCliccato.FadeTo(1, 100);
+
+				await Navigation.PushAsync(new DettaglioRichiestaPage(richiestaSelezionata, _pb));
+			}
+		}
 	}
 }

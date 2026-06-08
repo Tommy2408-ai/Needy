@@ -20,6 +20,11 @@
                 <DataTemplate>
                     <!-- DISEGNO DELLA SINGOLA CARD -->
                     <Frame Margin="0,0,0,15" Padding="15" CornerRadius="10" BorderColor="LightGray" HasShadow="True" BackgroundColor="White">
+
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnRichiestaTapped"/>
+                        </Frame.GestureRecognizers>
+                        
                         <VerticalStackLayout Spacing="5">
                             <!-- Binding collega la grafica ai dati del file Richiesta.cs (scritto in minuscolo!) -->
                             <Label Text="{Binding title}" FontAttributes="Bold" FontSize="18" TextColor="Black"/>
