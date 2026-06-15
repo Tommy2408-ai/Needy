@@ -33,14 +33,14 @@ namespace Needy.Views
 
 			try
 			{
-				// 1. Controllo di sicurezza: se la sessione è vuota, blocca tutto
-				if (_pb.AuthStore.Model == null)
+                string mioId = await SecureStorage.Default.GetAsync("mio_id");
+
+                // 1. Controllo di sicurezza: se la sessione è vuota, blocca tutto
+                if (string.IsNullOrEmpty(mioId))
 				{
 					await DisplayAlert("Errore", "Non sei autenticato. Fai di nuovo il login.", "OK");
 					return;
 				}
-
-				string mioId = _pb.AuthStore.Model.Id;
 
 				// 2. Preara la durata
 				double durata = 1;

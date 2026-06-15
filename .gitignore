@@ -19,3 +19,5 @@ App/Needy/.github/
 **/obj/
 **/.vs/
 *.user
+/App/Needy/Needy/Views/ProfiloPage.xaml
+/App/Needy/Needy/Views/ProfiloPage.xaml.cs

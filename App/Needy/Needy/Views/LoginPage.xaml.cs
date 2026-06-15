@@ -60,8 +60,13 @@ namespace Needy.Views
                     // 1. Salviamo il Token segreto nella cassaforte del telefono
                     await SecureStorage.Default.SetAsync("auth_token", _pb.AuthStore.Token);
 
-                    // 2. Cambiamo pagina! Buttiamo giù il Login e carichiamo la Home
-                    Application.Current.MainPage = new HomePage(_pb);
+                    await SecureStorage.Default.SetAsync("mio_id", utenteLoggato.Record.Id);
+
+                    // Usiamo MainThread per cambiare pagina ed evitare crash su Android
+                    MainThread.BeginInvokeOnMainThread(() =>
+                    {
+                        Application.Current.MainPage = new NavigationPage(new HomePage(_pb));
+                    });
                 }
                 else
                 {
