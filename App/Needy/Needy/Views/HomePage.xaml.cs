@@ -85,5 +85,10 @@ namespace Needy.Views
 				await Navigation.PushAsync(new DettaglioRichiestaPage(richiestaSelezionata, _pb));
 			}
 		}
+
+		private async void OnProfiloClicked(object sender, EventArgs e)
+		{
+			await Navigation.PushAsync(new ProfiloPage(_pb));
+		}
 	}
 }
