@@ -21,7 +21,30 @@ namespace Needy.Views
 		protected override async void OnAppearing()
 		{
 			base.OnAppearing();
+			await CaricaIntestazione();
 			await CaricaRichieste();
+		}
+
+		private async Task CaricaIntestazione()
+		{
+			try
+			{
+				string mioId = await SecureStorage.Default.GetAsync("mio_id");
+
+				if (!string.IsNullOrEmpty(mioId))
+				{
+					var utente = await _pb.Records.GetOneAsync<User>("users", mioId);
+
+					if (utente.IsSuccess && utente.Value != null)
+					{
+						HeaderView.BindingContext = utente.Value;
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				System.Diagnostics.Debug.WriteLine("Errore caricamento intestazione: " + ex.Message);
+			}
 		}
 
 		private async Task CaricaRichieste()

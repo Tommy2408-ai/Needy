@@ -33,6 +33,16 @@ namespace Needy.Views
 					{
                         this.BindingContext = mioProfilo.Value;
                     }
+
+					var tutteLeRichieste = await _pb.Records.GetFullListAsync<Richiesta>("requests");
+
+					if (tutteLeRichieste.IsSuccess && tutteLeRichieste.Value != null)
+					{
+						// SOLO quelle dove io sono il Creatore o l'Aiutante
+						var ilMioStorico = tutteLeRichieste.Value.Where(r => r.requester == mioId || r.assistant == mioId).ToList();
+
+						StoricoCollection.ItemsSource = ilMioStorico;
+					}
 				}
             }
 			catch (Exception ex)
