@@ -42,7 +42,7 @@ namespace Needy.Views
 					return;
 				}
 
-				// 2. Preara la durata
+				// 2. Prepara la durata
 				double durata = 1;
 				if (!string.IsNullOrWhiteSpace(DurataEntry.Text))
 				{
@@ -58,7 +58,8 @@ namespace Needy.Views
 					estimated_duration = durata,
 					status = "APERTA",
 					requester = mioId,
-					assistant = null
+					assistant = null,
+					candidates = null
 				};
 
 				// 3. Inviamo 

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:Needy.Models"
+             x:Class="Needy.Views.NotifichePage"
+             Title="Le tue Notifiche"
+             BackgroundColor="#F5F5F5">
+    
+    <VerticalStackLayout Padding="15">
+        <Label Text="🔔 Novità per te" FontSize="22" FontAttributes="Bold" TextColor="#333333" Margin="5,0,0,15"/>
+
+        <CollectionView x:Name="NotificheCollection">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Richiesta">
+                    <Frame Margin="0,0,0,10" Padding="15" CornerRadius="10" BorderColor="#4CAF50" HasShadow="True" BackgroundColor="White">
+                        <VerticalStackLayout Spacing="5">
+                            <Label Text="Qualcuno si è offerto per:" FontSize="12" TextColor="Gray"/>
+                            <Label Text="{Binding title}" FontAttributes="Bold" FontSize="18" TextColor="Black"/>
+
+                            <Button Text="VEDI E SCEGLI" Clicked="OnVediCandidatiClicked" BackgroundColor="#2196F3" TextColor="White" CornerRadius="8" Margin="0,15,0,0" HeightRequest="45"/>
+                        </VerticalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+            <CollectionView.EmptyView>
+                <Label Text="Non hai nuove notifiche." TextColor="Gray" HorizontalOptions="Center" Margin="0,30" FontSize="16"/>
+            </CollectionView.EmptyView>
+        </CollectionView>
+    </VerticalStackLayout>
+    
+</ContentPage>

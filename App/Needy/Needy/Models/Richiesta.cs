@@ -6,14 +6,35 @@ using pocketbase_csharp_sdk.Models;
 
 namespace Needy.Models
 {
+#pragma warning disable IDE1006
     public class Richiesta : BaseModel
     {
+        [JsonPropertyName("title")]
         public string title { get; set; }
+
+        [JsonPropertyName("description")]
         public string description { get; set; }
+
+        [JsonPropertyName("category")]
         public string category { get; set; }
+
+        [JsonPropertyName("status")]
         public string status { get; set; }
+
+        [JsonPropertyName("estimated_duration")]
         public double estimated_duration { get; set; }
+
+        [JsonPropertyName("requester")]
         public string requester {  get; set; }
+
+        [JsonPropertyName("assistant")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string assistant { get; set; }
+
+        [JsonPropertyName("candidates")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public List<string> candidates {  get; set; } = new List<string>();
     }
+
+#pragma warning restore IDE1006
 }

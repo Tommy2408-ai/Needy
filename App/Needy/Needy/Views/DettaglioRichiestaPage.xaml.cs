@@ -19,6 +19,19 @@ namespace Needy.Views
 			this.BindingContext = _richiestaAttuale;
 		}
 
+		protected override async void OnAppearing()
+		{
+			base.OnAppearing();
+
+			string mioId = await SecureStorage.Default.GetAsync("mio_id");
+
+			if (_richiestaAttuale.candidates != null && _richiestaAttuale.candidates.Contains(mioId))
+			{
+				AccettaButton.Text = "GIÀ CANDIDATO";
+				AccettaButton.BackgroundColor = new Color(216, 138, 74);
+            }
+		}
+
 		private async void OnAccettaClicked(object sender, EventArgs e)
 		{
 			string mioId = await SecureStorage.Default.GetAsync("mio_id");
@@ -48,26 +61,38 @@ namespace Needy.Views
 
 			try
 			{
-				// Aggiorna i campi dell'oggetto
-				_richiestaAttuale.status = "IN_CORSO";
-				_richiestaAttuale.assistant = mioId;
+				// Controlliamo se si è già candidato
+				if (_richiestaAttuale.candidates != null && _richiestaAttuale.candidates.Contains(mioId))
+				{
+					await DisplayAlert("Ehi!", "Ti sei già candidato per questa richiesta. Attendi la risposta di chi l'ha creata.", "OK");
+					return;
+				}
 
-				// UpdateAsync richiede l'oggetto con tutti i dati (compreso l'ID)
+				if (_richiestaAttuale.candidates == null)
+				{
+					_richiestaAttuale.candidates = new List<string>();
+				}
+
+				_richiestaAttuale.candidates.Add(mioId);
+
+				// Nota: NON cambiamo lo stato. La richiesta rimane "Aperta" così altri possono offrirsi.
+				// Nota: NON riempiamo "assistant". Quello lo riempirà il requester dopo.
+
 				var risultato = await _pb.Records.UpdateAsync<Richiesta>("requests", _richiestaAttuale);
 
 				if (risultato.IsSuccess)
 				{
-					await DisplayAlert("Grazie di cuore! ❤️", "Hai accettato  la richiesta. Adesso la richiesta risulta IN CORSO.", "OK");
-
-					await Navigation.PopAsync();
+					await DisplayAlert("Candidatura inviata! 🙋‍♂️", "Ti sei candidato per questa richiesta. L'autore riceverà una notifica e potrà sceglierti.", "OK");
+                    AccettaButton.Text = "GIÀ CANDIDATO";
+                    AccettaButton.BackgroundColor = new Color(216, 138, 74);
+                    await Navigation.PopAsync();
 				}
 				else
 				{
 					string errore = risultato.Errors.Count > 0 ? risultato.Errors[0].Message : "Errore sconosciuto";
-					await DisplayAlert("Impossibile accettare", errore, "OK");
+					await DisplayAlert("Impossibile candidarsi", errore, "OK");
 
-					_richiestaAttuale.status = "Aperta";
-					_richiestaAttuale.assistant = null;
+					_richiestaAttuale.candidates.Remove(mioId);
 				}
 			}
 			catch (Exception ex)
@@ -86,8 +111,7 @@ namespace Needy.Views
 			}
 			finally
 			{
-				AccettaButton.IsEnabled = true; // Riabilita il pulsante
-				AccettaButton.Text = "MI OFFRO IO";
+				
 			}
 		}
     }
