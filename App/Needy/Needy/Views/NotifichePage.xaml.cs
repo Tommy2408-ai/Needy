@@ -52,7 +52,7 @@ namespace Needy.Views
 
 			if (richiestaSelezionata != null)
 			{
-				await DisplayAlert("Presto disponibile", $"A breve potrai scegliere chi accetterà '{richiestaSelezionata.title}'", "OK");
+				await Navigation.PushAsync(new SceltaCandidatiPage(richiestaSelezionata, _pb));
 			}
 		}
 	}

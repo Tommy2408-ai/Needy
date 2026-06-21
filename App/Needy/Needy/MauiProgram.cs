@@ -27,7 +27,9 @@ namespace Needy
 
             builder.Services.AddTransient<ProfiloPage>();
 
-            builder.Services.AddTransient<NotifichePage>();  
+            builder.Services.AddTransient<NotifichePage>();
+            
+            builder.Services.AddTransient<SceltaCandidatiPage>();
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif
