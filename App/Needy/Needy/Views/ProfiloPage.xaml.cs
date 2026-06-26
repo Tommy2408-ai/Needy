@@ -16,7 +16,9 @@ namespace Needy.Views
 		protected override async void OnAppearing()
 		{
 			base.OnAppearing();
+			LoadingOverlay.IsVisible = true;
 			await CaricaDatiProfilo();
+			LoadingOverlay.IsVisible = false;
         }
 
 		private async Task CaricaDatiProfilo()
@@ -38,8 +40,29 @@ namespace Needy.Views
 
 					if (tutteLeRichieste.IsSuccess && tutteLeRichieste.Value != null)
 					{
-						// SOLO quelle dove io sono il Creatore o l'Aiutante
-						var ilMioStorico = tutteLeRichieste.Value.Where(r => r.requester == mioId || r.assistant == mioId).ToList();
+						var ilMioStorico = new List<Richiesta>();
+
+						foreach (var r in tutteLeRichieste.Value)
+						{
+							// Created by me
+							if (r.requester == mioId)
+							{
+								r.MyRule = "Created by me";
+								ilMioStorico.Add(r);
+							}
+							// I'm the helper
+							else if (r.assistant == mioId)
+							{
+								r.MyRule = "You're helping";
+								ilMioStorico.Add(r);
+							}
+							// I'm a candidate, waiting for response
+							else if (r.candidates != null && r.candidates.Contains(mioId))
+							{
+								r.MyRule = "Waiting for response";
+								ilMioStorico.Add(r);
+							}
+						}
 
 						StoricoCollection.ItemsSource = ilMioStorico;
 					}

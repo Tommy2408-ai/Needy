@@ -24,7 +24,7 @@ namespace Needy.Views
 		{
 			try
 			{
-				var listaUtentiCompleti = new List<User>();
+				var listaCandidati = new List<CandidatoInfo>();
 
 				if (_richiestaAttuale.candidates != null)
 				{
@@ -33,12 +33,20 @@ namespace Needy.Views
 						var risposta = await _pb.Records.GetOneAsync<User>("users", idCandidato);
 						if (risposta.IsSuccess && risposta.Value != null)
 						{
-							listaUtentiCompleti.Add(risposta.Value);
+							string messaggioScritto = "Nessun messaggio.";
+							if (_richiestaAttuale.candidate_messages != null && _richiestaAttuale.candidate_messages.ContainsKey(idCandidato))
+								messaggioScritto = _richiestaAttuale.candidate_messages[idCandidato];
+
+							listaCandidati.Add(new CandidatoInfo
+							{
+								Utente = risposta.Value,
+								Messaggio = messaggioScritto
+							});
 						}
 					}
 				}
 
-				CandidatiCollection.ItemsSource = listaUtentiCompleti;
+				CandidatiCollection.ItemsSource = listaCandidati;
 			}
 			catch (Exception ex)
 			{
@@ -49,9 +57,11 @@ namespace Needy.Views
 		private async void OnScegliCandidatoClicked(object sender, EventArgs e)
 		{
 			var bottoneCliccato = (Button)sender;
-			var utenteScelto = bottoneCliccato.BindingContext as User;
 
-			if (utenteScelto == null) return;
+			var infoSelezionata = bottoneCliccato.BindingContext as CandidatoInfo;
+			if (infoSelezionata == null) return;
+
+			var utenteScelto = infoSelezionata.Utente;
 
 			bool conferma = await DisplayAlert("Conferma", $"Vuoi affidare la richiesta a {utenteScelto.Name}?", "SI", "NO");
 

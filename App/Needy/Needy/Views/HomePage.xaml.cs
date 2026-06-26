@@ -21,8 +21,13 @@ namespace Needy.Views
 		protected override async void OnAppearing()
 		{
 			base.OnAppearing();
+
+			LoadingOverlay.IsVisible = true;
+
 			await CaricaIntestazione();
 			await CaricaRichieste();
+
+			LoadingOverlay.IsVisible = false;
 		}
 
 		private async Task CaricaIntestazione()
@@ -33,7 +38,7 @@ namespace Needy.Views
 
 				if (!string.IsNullOrEmpty(mioId))
 				{
-					var utente = await _pb.Records.GetOneAsync<User>("users", mioId);
+					 var utente = await _pb.Records.GetOneAsync<User>("users", mioId);
 
 					if (utente.IsSuccess && utente.Value != null)
 					{
@@ -51,12 +56,17 @@ namespace Needy.Views
 		{
 			try
 			{
+				string mioId = await SecureStorage.Default.GetAsync("mio_id");
+
 				// 1. Chiediamo a PocketBase l'intera lista della collezione "requests"
 				// E la convertiamo automaticamente nella nostra classe <Richiesta>
 				var listaRichieste = await _pb.Records.GetFullListAsync<Richiesta>("requests");
 
-				// 2. Diciamo alla nostra grafica (RichiesteCollection) di usare questi dati!
-				RichiesteCollection.ItemsSource = listaRichieste.Value;
+				if (listaRichieste.IsSuccess && listaRichieste.Value != null)
+				{
+					var bachecaFiltrata = listaRichieste.Value.Where(r => r.requester != mioId && r.status == "APERTA").ToList();
+					RichiesteCollection.ItemsSource = bachecaFiltrata;
+				}
 			}
 			catch (Exception ex)
 			{

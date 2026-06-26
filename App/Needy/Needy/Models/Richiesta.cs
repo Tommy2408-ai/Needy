@@ -34,6 +34,13 @@ namespace Needy.Models
         [JsonPropertyName("candidates")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public List<string> candidates {  get; set; } = new List<string>();
+
+        [JsonPropertyName("candidate_messages")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public Dictionary<string, string> candidate_messages { get; set; } = new Dictionary<string, string>();
+
+        [JsonIgnore]
+        public string MyRule { get; set; }
     }
 
 #pragma warning restore IDE1006

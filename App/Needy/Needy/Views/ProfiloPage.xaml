@@ -6,69 +6,87 @@
              x:Class="Needy.Views.ProfiloPage"
              Title="Il Mio Profilo" BackgroundColor="#F5F5F5">
 
-    <ScrollView Padding="20">
-        <VerticalStackLayout Spacing="15" HorizontalOptions="Center">
-            
-            <!-- AVATAR (Per ora usiamo il robottino di default, poi faremo l'upload) -->
-            <Frame CornerRadius="60" HeightRequest="120" WidthRequest="120" HorizontalOptions="Center" Padding="0" IsClippedToBounds="True" Margin="0,20" BorderColor="LightGray">
-                <Image Source="dotnet_bot.png" Aspect="AspectFill"/>
-            </Frame>
+    <Grid>
 
-            <!-- NOME ED EMAIL -->
-            <Label Text="{Binding Name}" FontSize="26" FontAttributes="Bold" HorizontalOptions="Center" TextColor="Black"/>
-            <Label Text="{Binding Email}" FontSize="16" TextColor="Gray" HorizontalOptions="Center"/>
-            
-            <!-- CARD DELLE STATISTICHE -->
-            <Frame Margin="0,20" Padding="20" CornerRadius="10" HasShadow="True" BorderColor="LightGray" BackgroundColor="White" WidthRequest="300">
-                <VerticalStackLayout Spacing="10">
-                    
-                    <Label Text="🏆 Reputazione (Ore Donate):" FontAttributes="Bold" FontSize="16" TextColor="Gray"/>
-                    <Label Text="{Binding ReputationHour}" FontSize="28" TextColor="#4CAF50" FontAttributes="Bold" HorizontalOptions="Center"/>
+        <ScrollView Padding="20">
+            <VerticalStackLayout Spacing="15" HorizontalOptions="Center">
 
-                    <BoxView HeightRequest="1" Color="LightGray" Margin="0,15"/>
-                    
-                    <Label Text="🗺️ Quartiere:" FontAttributes="Bold" FontSize="16" TextColor="Gray"/>
-                    <Label Text="{Binding Neighborhood}" FontSize="20" FontAttributes="Bold" TextColor="#2196F3" HorizontalOptions="Center"/>
+                <!-- AVATAR (Per ora usiamo il robottino di default, poi faremo l'upload) -->
+                <Frame CornerRadius="60" HeightRequest="120" WidthRequest="120" HorizontalOptions="Center" Padding="0" IsClippedToBounds="True" Margin="0,20" BorderColor="LightGray">
+                    <Image Source="dotnet_bot.png" Aspect="AspectFill"/>
+                </Frame>
+
+                <!-- NOME ED EMAIL -->
+                <Label Text="{Binding Name}" FontSize="26" FontAttributes="Bold" HorizontalOptions="Center" TextColor="Black"/>
+                <Label Text="{Binding Email}" FontSize="16" TextColor="Gray" HorizontalOptions="Center"/>
+
+                <!-- CARD DELLE STATISTICHE -->
+                <Frame Margin="0,20" Padding="20" CornerRadius="10" HasShadow="True" BorderColor="LightGray" BackgroundColor="White" WidthRequest="300">
+                    <VerticalStackLayout Spacing="10">
+
+                        <Label Text="🏆 Reputazione (Ore Donate):" FontAttributes="Bold" FontSize="16" TextColor="Gray"/>
+                        <Label Text="{Binding ReputationHour}" FontSize="28" TextColor="#4CAF50" FontAttributes="Bold" HorizontalOptions="Center"/>
+
+                        <BoxView HeightRequest="1" Color="LightGray" Margin="0,15"/>
+
+                        <Label Text="🗺️ Quartiere:" FontAttributes="Bold" FontSize="16" TextColor="Gray"/>
+                        <Label Text="{Binding Neighborhood}" FontSize="20" FontAttributes="Bold" TextColor="#2196F3" HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <VerticalStackLayout Spacing="10" WidthRequest="300" Margin="0,10,0,20">
+                    <Label Text="📃 Il mio storico" FontSize="20" FontAttributes="Bold" TextColor="#333333"/>
+
+                    <CollectionView x:Name="StoricoCollection">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="models:Richiesta">
+                                <Frame Margin="0,0,0,10" Padding="12" CornerRadius="8" BorderColor="#E0E0E0" HasShadow="False" BackgroundColor="White">
+                                    <!-- Card -->
+                                    <VerticalStackLayout Spacing="5">
+                                        <Label Text="{Binding title}" FontAttributes="Bold" FontSize="16" TextColor="Black"/>
+                                        
+                                        <!-- Il mio ruolo -->
+                                        <HorizontalStackLayout>
+                                            <Border BackgroundColor="#FFF3E0" StrokeThickness="0" StrokeShape="RoundRectangle" Padding="8,4">
+                                                <Label Text="{Binding MyRule}" FontSize="12" FontAttributes="Bold" TextColor="#FF9800"/>
+                                            </Border>
+                                        </HorizontalStackLayout>
+
+                                        <!-- Categoria e durata -->
+                                        <HorizontalStackLayout Spacing="10" Margin="0,5,0,0">
+                                            <Label Text="{Binding category}" FontSize="12" TextColor="Gray"/>
+                                            <Label Text="•" FontSize="12" TextColor="Gray"/>
+                                            <Label Text="{Binding estimated_duration, StringFormat='{0} ore'}" FontSize="12" TextColor="Gray"/>
+                                        </HorizontalStackLayout>
+
+                                        <BoxView HeightRequest="1" Color="#EEEEEE" Margin="0,5"/>
+
+                                        <HorizontalStackLayout Spacing="5">
+                                            <Label Text="Stato:" FontSize="12" TextColor="Gray" VerticalOptions="Center"/>
+                                            <Border BackgroundColor="#E3F2FD" StrokeThickness="0" StrokeShape="RoundRectangle 5" Padding="8,4">
+                                                <Label Text="{Binding status}" FontSize="12" FontAttributes="Bold" TextColor="#2196F3"/>
+                                            </Border>
+                                        </HorizontalStackLayout>
+                                    </VerticalStackLayout>
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                        <CollectionView.EmptyView>
+                            <Label Text="Nessuna attività recente." TextColor="Gray" HorizontalOptions="Center" Margin="0,20"/>
+                        </CollectionView.EmptyView>
+                    </CollectionView>
                 </VerticalStackLayout>
-            </Frame>
 
-            <VerticalStackLayout Spacing="10" WidthRequest="300" Margin="0,10,0,20">
-                <Label Text="📃 Il mio storico" FontSize="20" FontAttributes="Bold" TextColor="#333333"/>
-
-                <CollectionView x:Name="StoricoCollection">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="models:Richiesta">
-                            <Frame Margin="0,0,0,10" Padding="12" CornerRadius="8" BorderColor="#E0E0E0" HasShadow="False" BackgroundColor="White">
-                                <!-- Card -->
-                                <VerticalStackLayout Spacing="4">
-                                    <Label Text="{Binding title}" FontAttributes="Bold" FontSize="16" TextColor="Black"/>
-                                    
-                                    <!-- Categoria e durata -->
-                                    <HorizontalStackLayout Spacing="10">
-                                        <Label Text="{Binding category}" FontSize="12" TextColor="Gray"/>
-                                        <Label Text="•" FontSize="12" TextColor="Gray"/>
-                                        <Label Text="{Binding estimated_duration, StringFormat='{0} ore'}" FontSize="12" TextColor="Gray"/>
-                                    </HorizontalStackLayout>
-
-                                    <BoxView HeightRequest="1" Color="#EEEEEE" Margin="0,5"/>
-
-                                    <HorizontalStackLayout Spacing="5">
-                                        <Label Text="Stato:" FontSize="12" TextColor="Gray" VerticalOptions="Center"/>
-                                        <Border BackgroundColor="#E3F2FD" StrokeThickness="0" StrokeShape="RoundRectangle 5" Padding="8,4">
-                                            <Label Text="{Binding status}" FontSize="12" FontAttributes="Bold" TextColor="#2196F3"/>
-                                        </Border>
-                                    </HorizontalStackLayout>
-                                </VerticalStackLayout>
-                            </Frame>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                    <CollectionView.EmptyView>
-                        <Label Text="Nessuna attività recente." TextColor="Gray" HorizontalOptions="Center" Margin="0,20"/>
-                    </CollectionView.EmptyView>
-                </CollectionView>
             </VerticalStackLayout>
-            
-        </VerticalStackLayout>
-    </ScrollView>
-    
+        </ScrollView>
+
+        <Grid x:Name="LoadingOverlay" BackgroundColor="#80000000" IsVisible="False" ZIndex="999">
+            <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="15">
+                <ActivityIndicator IsRunning="True" Color="#4CAF50" WidthRequest="60" HeightRequest="60"/>
+                <Label Text="Caricamento in corso..." TextColor="White" FontAttributes="Bold" FontSize="18" HorizontalOptions="Center"/>
+            </VerticalStackLayout>
+        </Grid>
+
+    </Grid>
+
 </ContentPage>

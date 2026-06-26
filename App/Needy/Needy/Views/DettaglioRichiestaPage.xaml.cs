@@ -68,12 +68,34 @@ namespace Needy.Views
 					return;
 				}
 
+				string messaggio = await DisplayPromptAsync(
+					title: "Ti stai offrendo!",
+					message: "Scrivi un breve messaggio all'autore (opzionale):",
+					accept: "INVIA",
+					cancel: "ANNULLA",
+					placeholder: "Es: Ciao, posso passare verso le 15:00");
+
+				if (messaggio == null)
+				{
+					AccettaButton.IsEnabled = true;
+					AccettaButton.Text = "MI OFFRO IO";
+					return;
+				}
+
+				AccettaButton.IsEnabled = false;
+				AccettaButton.Text = "CANDIDATURA IN CORSO...";
+
 				if (_richiestaAttuale.candidates == null)
 				{
 					_richiestaAttuale.candidates = new List<string>();
 				}
 
 				_richiestaAttuale.candidates.Add(mioId);
+
+				if (_richiestaAttuale.candidate_messages == null)
+					_richiestaAttuale.candidate_messages = new Dictionary<string, string>();
+
+				_richiestaAttuale.candidate_messages[mioId] = messaggio;
 
 				// Nota: NON cambiamo lo stato. La richiesta rimane "Aperta" così altri possono offrirsi.
 				// Nota: NON riempiamo "assistant". Quello lo riempirà il requester dopo.
@@ -85,14 +107,14 @@ namespace Needy.Views
 					await DisplayAlert("Candidatura inviata! 🙋‍♂️", "Ti sei candidato per questa richiesta. L'autore riceverà una notifica e potrà sceglierti.", "OK");
                     AccettaButton.Text = "GIÀ CANDIDATO";
                     AccettaButton.BackgroundColor = new Color(216, 138, 74);
-                    await Navigation.PopAsync();
-				}
+                }
 				else
 				{
 					string errore = risultato.Errors.Count > 0 ? risultato.Errors[0].Message : "Errore sconosciuto";
 					await DisplayAlert("Impossibile candidarsi", errore, "OK");
 
 					_richiestaAttuale.candidates.Remove(mioId);
+					_richiestaAttuale.candidate_messages.Remove(mioId);
 				}
 			}
 			catch (Exception ex)
