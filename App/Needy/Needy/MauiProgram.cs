@@ -30,6 +30,8 @@ namespace Needy
             builder.Services.AddTransient<NotifichePage>();
             
             builder.Services.AddTransient<SceltaCandidatiPage>();
+
+            builder.Services.AddTransient<RegistrazionePage>();
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif

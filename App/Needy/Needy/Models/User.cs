@@ -1,4 +1,5 @@
-﻿using pocketbase_csharp_sdk.Models;
+﻿using Newtonsoft.Json;
+using pocketbase_csharp_sdk.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -33,6 +34,15 @@ namespace Needy.Models
 
         [JsonPropertyName("neighborhood")]
         public string Neighborhood { get; set; }
+
+        // Only for the registration
+        [JsonPropertyName("password")]
+        [System.Text.Json.Serialization.JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public string Password { get; set; }
+
+        [JsonProperty("passwordConfirm")]
+        [System.Text.Json.Serialization.JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public string PasswordConfirm { get; set; }
 
         public string Created {  get; set; }
         public string Updated { get; set; }

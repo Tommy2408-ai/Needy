@@ -94,5 +94,10 @@ namespace Needy.Views
                 LoginButton.Text = "ENTRA";
             }
         }
+
+        private async void OnRegistratiTapped(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new RegistrazionePage(_pb));
+        }
     }
 }

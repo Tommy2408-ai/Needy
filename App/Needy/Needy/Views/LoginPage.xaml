@@ -28,7 +28,11 @@
             <Button x:Name="LoginButton" Text="ENTRA" Clicked="OnLoginButtonClicked" FontAttributes="Bold" FontSize="20" HeightRequest="60" CornerRadius="10" BackgroundColor="#2196F3" TextColor="White" Margin="0,20,0,0"/>
             
             <!-- REGISTRAZIONE -->
-            <Label Text="Non hai un account? Registrati" FontSize="16" TextColor="#2196F3" HorizontalOptions="Center" TextDecorations="Underline"/>
+            <Label Text="Non hai un account? Registrati" FontSize="16" TextColor="#2196F3" HorizontalOptions="Center" TextDecorations="Underline">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnRegistratiTapped"/>
+                </Label.GestureRecognizers>
+            </Label>
             
             <!-- Messaggio di Errore (Invisibile all'inizio)-->
             <Label x:Name="ErrorLabel" Text="Credenziali errate o account non approvato." TextColor="Red" IsVisible="False" HorizontalOptions="Center" FontAttributes="Bold"/>
