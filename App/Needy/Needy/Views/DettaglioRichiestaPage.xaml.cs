@@ -2,6 +2,7 @@ using Microsoft.Maui.Controls;
 using Needy.Models;
 using pocketbase_csharp_sdk;
 using System;
+using System.Diagnostics;
 
 namespace Needy.Views
 {
@@ -23,13 +24,63 @@ namespace Needy.Views
 		{
 			base.OnAppearing();
 
+			LoadingOverlay.IsVisible = true;
+
+			try
+			{
+				var autore = await _pb.Records.GetOneAsync<User>("users", _richiestaAttuale.requester);
+
+				if (autore.IsSuccess && autore.Value != null)
+				{
+					AutoreCard.BindingContext = autore.Value;
+					AutoreCard.IsVisible = true;
+				}
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine($"Errore caricamento autore: {ex.Message}");
+			}
+
 			string mioId = await SecureStorage.Default.GetAsync("mio_id");
 
-			if (_richiestaAttuale.candidates != null && _richiestaAttuale.candidates.Contains(mioId))
+			if (_richiestaAttuale.status == "COMPLETATA")
+				CompletataLabel.IsVisible = true;
+			else if (_richiestaAttuale.requester == mioId)
 			{
-				AccettaButton.Text = "GIÀ CANDIDATO";
-				AccettaButton.BackgroundColor = new Color(216, 138, 74);
-            }
+				if (_richiestaAttuale.status == "IN_CORSO")
+					CompletaButton.IsVisible = true;
+			}
+			else
+			{
+				if (_richiestaAttuale.status == "APERTA")
+				{
+					AccettaButton.IsVisible = true;
+
+					if (_richiestaAttuale.candidates != null && _richiestaAttuale.candidates.Contains(mioId))
+					{
+						AccettaButton.Text = "GIÀ CANDIDATO";
+						AccettaButton.BackgroundColor = new Color(216, 138, 74);
+						AccettaButton.IsEnabled = false;
+
+                    }
+				}
+			}
+
+            LoadingOverlay.IsVisible = false;
+        }
+
+		private async void OnAutoreTapped(object sender, EventArgs e)
+		{
+			var card = (Frame)sender;
+			var utenteCliccato = card.BindingContext as User;
+
+			if (utenteCliccato != null)
+			{
+				await card.FadeTo(0.5, 100);
+				await card.FadeTo(1, 100);
+
+				await DisplayAlert("Profilo", $"Vuoi vedere il profilo di {utenteCliccato.Name}?\nHa donato {utenteCliccato.ReputationHour} ore!", "OK");
+			}
 		}
 
 		private async void OnAccettaClicked(object sender, EventArgs e)
@@ -135,6 +186,44 @@ namespace Needy.Views
 			{
 				
 			}
+		}
+
+		private async void OnCompletaClicked(object sender, EventArgs e)
+		{
+			bool conferma = await DisplayAlert("Conferma", "Vuoi chiudere questa richiesta? Le ore verranno assegnate all'aiutante.", "SÌ", "NO");
+			if (!conferma) return;
+
+			CompletaButton.IsEnabled = false;
+			CompletaButton.Text = "CARICAMENTO";
+
+			try
+			{
+				_richiestaAttuale.status = "COMPLETATA";
+				await _pb.Records.UpdateAsync<Richiesta>("requests", _richiestaAttuale);
+
+				if (!string.IsNullOrEmpty(_richiestaAttuale.assistant))
+				{
+					var aiutante = await _pb.Records.GetOneAsync<User>("users", _richiestaAttuale.assistant);
+
+					if (aiutante.IsSuccess && aiutante.Value != null)
+					{
+						aiutante.Value.ReputationHour += (int)Math.Ceiling(_richiestaAttuale.estimated_duration);
+
+						await _pb.Records.UpdateAsync<User>("users", aiutante.Value);
+					}
+				}
+
+				await DisplayAlert("Fatto!", "Richiesta completata e ore assegnate! Grazie per aver usato Needy.", "OK");
+				await Navigation.PopAsync();
+			}
+			catch (Exception ex)
+			{
+				await DisplayAlert("Errore", "Impossibile completare la richiesta.", "OK");
+				_richiestaAttuale.status = "IN_CORSO";
+				CompletaButton.IsEnabled = true;
+				CompletaButton.Text = "✓ CONTRASSEGNA COME COMPLETATA";
+
+            }
 		}
     }
 }

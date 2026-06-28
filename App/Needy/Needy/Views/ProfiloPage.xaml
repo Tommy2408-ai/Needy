@@ -34,45 +34,48 @@
                     </VerticalStackLayout>
                 </Frame>
 
-                <VerticalStackLayout Spacing="10" WidthRequest="300" Margin="0,10,0,20">
-                    <Label Text="📃 Il mio storico" FontSize="20" FontAttributes="Bold" TextColor="#333333"/>
-
+                <!-- STORICO -->
+                <VerticalStackLayout Spacing="10" WidthRequest="320" Margin="0,10,0,20">
+                    
+                    <!-- I DUE TAB -->
+                    <Border Stroke="#E0E0E0" StrokeThickness="1" StrokeShape="RoundRectangle 8" Padding="2" BackgroundColor="White">
+                        <Grid ColumnDefinitions="*, *">
+                            <Button x:Name="TabMyRequests" Text="My Requests" Clicked="OnTabClicked" BackgroundColor="#2196F3" TextColor="White" CornerRadius="6" HeightRequest="40" FontSize="14" FontAttributes="Bold"/>
+                            <Button x:Name="TabMyContributions" Grid.Column="1" Text="My Contributions" Clicked="OnTabClicked" BackgroundColor="Transparent" TextColor="Gray" CornerRadius="6" HeightRequest="40" FontSize="14" FontAttributes="Bold"/>
+                        </Grid>
+                    </Border>
+                    
+                    <!-- LA LISTA -->
                     <CollectionView x:Name="StoricoCollection">
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="models:Richiesta">
-                                <Frame Margin="0,0,0,10" Padding="12" CornerRadius="8" BorderColor="#E0E0E0" HasShadow="False" BackgroundColor="White">
-                                    <!-- Card -->
+
+                                <Frame Margin="0,5,0,10" Padding="15" CornerRadius="8" BorderColor="#E0E0E0" HasShadow="False" BackgroundColor="White">
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnRichiestaTapped"/>
+                                    </Frame.GestureRecognizers>
+
                                     <VerticalStackLayout Spacing="5">
                                         <Label Text="{Binding title}" FontAttributes="Bold" FontSize="16" TextColor="Black"/>
-                                        
-                                        <!-- Il mio ruolo -->
-                                        <HorizontalStackLayout>
-                                            <Border BackgroundColor="#FFF3E0" StrokeThickness="0" StrokeShape="RoundRectangle" Padding="8,4">
-                                                <Label Text="{Binding MyRule}" FontSize="12" FontAttributes="Bold" TextColor="#FF9800"/>
-                                            </Border>
-                                        </HorizontalStackLayout>
 
-                                        <!-- Categoria e durata -->
-                                        <HorizontalStackLayout Spacing="10" Margin="0,5,0,0">
+                                        <HorizontalStackLayout Spacing="10" Margin="0,2">
                                             <Label Text="{Binding category}" FontSize="12" TextColor="Gray"/>
                                             <Label Text="•" FontSize="12" TextColor="Gray"/>
-                                            <Label Text="{Binding estimated_duration, StringFormat='{0} ore'}" FontSize="12" TextColor="Gray"/>
+                                            <Label Text="{Binding estimated_duration, StringFormat='{0} hrs'}" FontSize="12" TextColor="Gray"/>
                                         </HorizontalStackLayout>
-
-                                        <BoxView HeightRequest="1" Color="#EEEEEE" Margin="0,5"/>
-
-                                        <HorizontalStackLayout Spacing="5">
-                                            <Label Text="Stato:" FontSize="12" TextColor="Gray" VerticalOptions="Center"/>
-                                            <Border BackgroundColor="#E3F2FD" StrokeThickness="0" StrokeShape="RoundRectangle 5" Padding="8,4">
-                                                <Label Text="{Binding status}" FontSize="12" FontAttributes="Bold" TextColor="#2196F3"/>
-                                            </Border>
-                                        </HorizontalStackLayout>
+                                        
+                                        <!-- TARGHETTA -->
+                                        <Border BackgroundColor="{Binding ColoreStato}" StrokeThickness="0" StrokeShape="RoundRectangle 5" Padding="8,4" HorizontalOptions="Start" Margin="0,5,0,0">
+                                            <Label Text="{Binding StatoVisuale}" FontSize="12" FontAttributes="Bold" TextColor="White"/>
+                                        </Border>
                                     </VerticalStackLayout>
                                 </Frame>
+                                
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
+
                         <CollectionView.EmptyView>
-                            <Label Text="Nessuna attività recente." TextColor="Gray" HorizontalOptions="Center" Margin="0,20"/>
+                            <Label Text="No activities found." TextColor="Gray" HorizontalOptions="Center" Margin="0,20"/>
                         </CollectionView.EmptyView>
                     </CollectionView>
                 </VerticalStackLayout>

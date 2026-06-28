@@ -41,6 +41,15 @@ namespace Needy.Models
 
         [JsonIgnore]
         public string MyRule { get; set; }
+
+        [JsonIgnore]
+        public string StatoVisuale { get; set; }
+
+        [JsonIgnore]
+        public string ColoreStato {  get; set; }
+
+        [JsonIgnore]
+        public bool IsMyRequest {  get; set; }
     }
 
 #pragma warning restore IDE1006

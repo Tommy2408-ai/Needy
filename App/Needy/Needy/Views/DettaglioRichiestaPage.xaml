@@ -6,32 +6,72 @@
              x:DataType="models:Richiesta"
              Title="Dettaglio Richiesta"
              Background="#F5F5F5">
+    <Grid>
+        <ScrollView Padding="20">
+            <VerticalStackLayout Spacing="15">
 
-    <ScrollView Padding="20">
-        <VerticalStackLayout Spacing="15">
-            
-            <!-- TITOLO E CATEGORIA -->
-            <Label Text="{Binding title}" FontSize="26" FontAttributes="Bold" TextColor="Black"/>
-            <Label Text="{Binding category}" FontSize="16" TextColor="#2196F3" FontAttributes="Bold"/>
+                <!-- AUTORE DELLA RICHIESTA -->
+                <Frame x:Name="AutoreCard" x:DataType="models:User" IsVisible="False" Margin="0,0,0,10" Padding="10" CornerRadius="10" BorderColor="LightGray" HasShadow="False" BackgroundColor="White">
 
-            <BoxView HeightRequest="1" Color="LightGray" Margin="0,10"/>
-            
-            <!-- DESCRIZIONE -->
-            <Label Text="Descrizione:" FontAttributes="Bold" TextColor="Gray" FontSize="14"/>
-            <Label Text="{Binding description}" FontSize="16" TextColor="Black"/>
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnAutoreTapped"/>
+                    </Frame.GestureRecognizers>
 
-            <BoxView HeightRequest="1" Color="LightGray" Margin="0,10"/>
-            
-            <!-- DURATA -->
-            <HorizontalStackLayout Spacing="10">
-                <Label Text="Durata stimata:" FontAttributes="Bold" TextColor="Gray" FontSize="14"/>
-                <Label Text="{Binding estimated_duration}" FontSize="14" TextColor="Black" FontAttributes="Bold"/>
-                <Label Text="ore" FontSize="14" TextColor="Black"/>
-            </HorizontalStackLayout>
-            
-            <!-- BOTTONE PER ACCETTARE -->
-            <Button x:Name="AccettaButton" Text="MI OFFRO IO" BackgroundColor="#4CAF50" TextColor="White" FontAttributes="Bold" CornerRadius="8" HeightRequest="55" Margin="0,30,0,0" Clicked="OnAccettaClicked"/>
-            
-        </VerticalStackLayout>
-    </ScrollView>
+                    <Grid ColumnDefinitions="Auto, *, Auto" VerticalOptions="Center">
+
+                        <Frame Grid.Column="0" CornerRadius="25" HeightRequest="50" WidthRequest="50" Padding="0" IsClippedToBounds="True" BorderColor="LightGray">
+                            <Image Source="dotnet_bot.png" Aspect="AspectFill"/>
+                        </Frame>
+
+                        <VerticalStackLayout Grid.Column="1" Margin="15,0,0,0" VerticalOptions="Center">
+                            <Label Text="Richiesto da:" FontSize="12" TextColor="Gray"/>
+                            <Label Text="{Binding Name}" FontAttributes="Bold" FontSize="16" TextColor="Black"/>
+                        </VerticalStackLayout>
+
+                        <Label Grid.Column="2" Text="➔" FontSize="20" TextColor="#2196F3" VerticalOptions="Center" Margin="0,0,5,0"/>
+                    </Grid>
+                </Frame>
+
+                <!-- TITOLO E CATEGORIA -->
+                <Label Text="{Binding title}" FontSize="26" FontAttributes="Bold" TextColor="Black"/>
+                <Label Text="{Binding category}" FontSize="16" TextColor="#2196F3" FontAttributes="Bold"/>
+
+                <BoxView HeightRequest="1" Color="LightGray" Margin="0,10"/>
+
+                <!-- DESCRIZIONE -->
+                <Label Text="Descrizione:" FontAttributes="Bold" TextColor="Gray" FontSize="14"/>
+                <Label Text="{Binding description}" FontSize="16" TextColor="Black"/>
+
+                <BoxView HeightRequest="1" Color="LightGray" Margin="0,10"/>
+
+                <!-- DURATA -->
+                <HorizontalStackLayout Spacing="10">
+                    <Label Text="Durata stimata:" FontAttributes="Bold" TextColor="Gray" FontSize="14"/>
+                    <Label Text="{Binding estimated_duration}" FontSize="14" TextColor="Black" FontAttributes="Bold"/>
+                    <Label Text="ore" FontSize="14" TextColor="Black"/>
+                </HorizontalStackLayout>
+
+                <!-- Bottone 1: Candidatura -->
+                <Button x:Name="AccettaButton" Text="MI OFFRO IO" BackgroundColor="#4CAF50" TextColor="White" FontAttributes="Bold" CornerRadius="8" HeightRequest="55" Margin="0,30,0,0" Clicked="OnAccettaClicked" IsVisible="False"/>
+
+                <!-- Bottone 2: Chiusura (Solo per il creatore) -->
+                <Button x:Name="CompletaButton" Text="✓ CONTRASSEGNA COME COMPLETATA" BackgroundColor="#2196F3" TextColor="White" FontAttributes="Bold" CornerRadius="8" HeightRequest="55" Margin="0,30,0,0" Clicked="OnCompletaClicked" IsVisible="False"/>
+
+                <!-- Testo 3: Richiesta già chiusa -->
+                <Label x:Name="CompletataLabel" Text="✅ Questa richiesta è stata completata!" TextColor="#4CAF50" FontAttributes="Bold" FontSize="18" HorizontalOptions="Center" Margin="0,30,0,0" IsVisible="False"/>
+
+            </VerticalStackLayout>
+        </ScrollView>
+        
+        <!-- OVERLAY DI CARICAMENTO -->
+        <Grid x:Name="LoadingOverlay" BackgroundColor="#80000000" IsVisible="False" ZIndex="999">
+
+            <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="15">
+                <ActivityIndicator IsRunning="True" Color="#4CAF50" WidthRequest="60" HeightRequest="60"/>
+                <Label Text="Caricamento in corso..." TextColor="White" FontAttributes="Bold" FontSize="18" HorizontalOptions="Center"/>
+            </VerticalStackLayout>
+
+        </Grid>
+        
+    </Grid>
 </ContentPage>
