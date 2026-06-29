@@ -33,7 +33,7 @@
 
                             <!-- ORE NEL PORTAFOGLIO -->
                             <VerticalStackLayout Grid.Column="2" VerticalOptions="Center" HorizontalOptions="End">
-                                <Label Text="{Binding ReputationHour, StringFormat='{0} ore'}" FontSize="18" FontAttributes="Bold" TextColor="#4CAF50"/>
+                                <Label Text="{Binding reputation_hour, StringFormat='{0} ore'}" FontSize="18" FontAttributes="Bold" TextColor="#4CAF50"/>
                             </VerticalStackLayout>
 
                         </Grid>

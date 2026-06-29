@@ -10,7 +10,7 @@ namespace Needy.Models
     public class User : BaseModel
     {
         // The unique ID that PocketBase gives to each user (e.g., "k2g4ekefa...")
-        public string Id { get; set; }
+
 
         // The complete name of the user
         [JsonPropertyName("name")]
@@ -29,8 +29,9 @@ namespace Needy.Models
         public bool IsVerified { get; set; }
 
         // Reputation hour
-        [JsonPropertyName("reputation_hour")]
-        public int ReputationHour { get; set; }
+#pragma warning disable IDE1006
+        public int reputation_hour { get; set; }
+#pragma warning restore IDE1006
 
         [JsonPropertyName("neighborhood")]
         public string Neighborhood { get; set; }
@@ -40,11 +41,8 @@ namespace Needy.Models
         [System.Text.Json.Serialization.JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string Password { get; set; }
 
-        [JsonProperty("passwordConfirm")]
+        [JsonPropertyName("passwordConfirm")]
         [System.Text.Json.Serialization.JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string PasswordConfirm { get; set; }
-
-        public string Created {  get; set; }
-        public string Updated { get; set; }
     }
 }

@@ -95,7 +95,7 @@ namespace Needy.Views
             }
         }
 
-        private async void OnRegistratiTapped(object sender, EventArgs e)
+        private async void OnRegisterTapped(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new RegistrazionePage(_pb));
         }

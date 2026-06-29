@@ -59,7 +59,7 @@ namespace Needy.Views
 					PasswordConfirm = ConfermaPasswordEntry.Text,
 					Name = NomeEntry.Text,
 					Neighborhood = QuartiereEntry.Text ?? "",
-					ReputationHour = 0
+					reputation_hour = 0
 				};
 
 				using var stream = await _documentoSelezionato.OpenReadAsync();

@@ -79,7 +79,7 @@ namespace Needy.Views
 				await card.FadeTo(0.5, 100);
 				await card.FadeTo(1, 100);
 
-				await DisplayAlert("Profilo", $"Vuoi vedere il profilo di {utenteCliccato.Name}?\nHa donato {utenteCliccato.ReputationHour} ore!", "OK");
+				await DisplayAlert("Profilo", $"Vuoi vedere il profilo di {utenteCliccato.Name}?\nHa donato {utenteCliccato.reputation_hour} ore!", "OK");
 			}
 		}
 
@@ -207,9 +207,17 @@ namespace Needy.Views
 
 					if (aiutante.IsSuccess && aiutante.Value != null)
 					{
-						aiutante.Value.ReputationHour += (int)Math.Ceiling(_richiestaAttuale.estimated_duration);
+						aiutante.Value.Id = _richiestaAttuale.assistant;
 
-						await _pb.Records.UpdateAsync<User>("users", aiutante.Value);
+						aiutante.Value.reputation_hour += (int)Math.Ceiling(_richiestaAttuale.estimated_duration);
+
+						var updateUtente = await _pb.Records.UpdateAsync<User>("users", aiutante.Value);
+
+						if (!updateUtente.IsSuccess)
+						{
+							string err = updateUtente.Errors.Count > 0 ? updateUtente.Errors[0].Message : "Errore ignoto";
+							await DisplayAlert("Errore Ore", $"Impossibile aggiornare le ore: {err}", "OK");
+						}
 					}
 				}
 

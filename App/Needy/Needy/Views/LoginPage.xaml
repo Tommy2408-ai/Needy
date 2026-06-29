@@ -3,39 +3,39 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Needy.Views.LoginPage"
              BackgroundColor="#F5F5F5"
-             Title="Accedi a Needy">
+             Title="Log in to Needy">
 
     <ScrollView>
         <VerticalStackLayout Spacing="25" Padding="30" VerticalOptions="Center">
-            
-            <!-- LOGO O TITOLO (Grande e leggibile) -->
+
+            <!-- LOGO OR TITLE (Large and legible) -->
             <Image Source="dotnet_bot.png" HeightRequest="150" HorizontalOptions="Center"/>
 
-            <Label Text="Benvenuto in Needy" FontSize="28" FontAttributes="Bold" TextColor="#333333" HorizontalOptions="Center"/>
+            <Label Text="Welcome to Needy" FontSize="28" FontAttributes="Bold" TextColor="#333333" HorizontalOptions="Center"/>
 
-            <Label Text="La comunità che ti aiuta." FontSize="18" TextColor="#666666" HorizontalOptions="Center" Margin="0,-15,0,20"/>
-            
-            <!-- CAMPI DI INSERIMENTO (Grandi per facilitare il tocco) -->
+            <Label Text="The community that helps you." FontSize="18" TextColor="#666666" HorizontalOptions="Center" Margin="0,-15,0,20"/>
+
+            <!-- ENTRY FIELDS (Large for easy touching) -->
             <Border Stroke="#CCCCCC" StrokeThickness="1" StrokeShape="RoundRectangle 10" Padding="5">
-                <Entry x:Name="EmailEntry" Placeholder="Inserisci la tua Email" Keyboard="Email" FontSize="18" BackgroundColor="White" TextColor="Black"/>
+                <Entry x:Name="EmailEntry" Placeholder="Enter your email address" Keyboard="Email" FontSize="18" BackgroundColor="White" TextColor="Black"/>
             </Border>
 
             <Border Stroke="#CCCCCC" StrokeThickness="1" StrokeShape="RoundRectangle 10" Padding="5">
-                <Entry x:Name="PasswordEntry" Placeholder="Inserisci la Password" IsPassword="True" FontSize="18" BackgroundColor="White" TextColor="Black"/>
+                <Entry x:Name="PasswordEntry" Placeholder="Enter your password" IsPassword="True" FontSize="18" BackgroundColor="White" TextColor="Black"/>
             </Border>
-            
-            <!-- BOTTONE ENTRA-->
-            <Button x:Name="LoginButton" Text="ENTRA" Clicked="OnLoginButtonClicked" FontAttributes="Bold" FontSize="20" HeightRequest="60" CornerRadius="10" BackgroundColor="#2196F3" TextColor="White" Margin="0,20,0,0"/>
-            
-            <!-- REGISTRAZIONE -->
-            <Label Text="Non hai un account? Registrati" FontSize="16" TextColor="#2196F3" HorizontalOptions="Center" TextDecorations="Underline">
+
+            <!-- ENTER BUTTON -->
+            <Button x:Name="LoginButton" Text="ENTER" Clicked="OnLoginButtonClicked" FontAttributes="Bold" FontSize="20" HeightRequest="60" CornerRadius="10" BackgroundColor="#2196F3" TextColor="White" Margin="0,20,0,0"/>
+
+            <!-- REGISTRATION -->
+            <Label Text="Don't have an account? Register" FontSize="16" TextColor="#2196F3" HorizontalOptions="Center" TextDecorations="Underline">
                 <Label.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="OnRegistratiTapped"/>
+                    <TapGestureRecognizer Tapped="OnRegisterTapped"/>
                 </Label.GestureRecognizers>
             </Label>
-            
-            <!-- Messaggio di Errore (Invisibile all'inizio)-->
-            <Label x:Name="ErrorLabel" Text="Credenziali errate o account non approvato." TextColor="Red" IsVisible="False" HorizontalOptions="Center" FontAttributes="Bold"/>
+
+            <!-- Error Message (Invisible at the beginning) -->
+            <Label x:Name="ErrorLabel" Text="Incorrect credentials or unapproved account." TextColor="Red" IsVisible="False" HorizontalOptions="Center" FontAttributes="Bold"/>
         </VerticalStackLayout>
     </ScrollView>
     
