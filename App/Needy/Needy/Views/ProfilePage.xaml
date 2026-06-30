@@ -3,56 +3,56 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:models="clr-namespace:Needy.Models"
              x:DataType="models:User"
-             x:Class="Needy.Views.ProfiloPage"
-             Title="Il Mio Profilo" BackgroundColor="#F5F5F5">
+             x:Class="Needy.Views.ProfilePage"
+             Title="My Profile" BackgroundColor="#F5F5F5">
 
     <Grid>
 
         <ScrollView Padding="20">
             <VerticalStackLayout Spacing="15" HorizontalOptions="Center">
 
-                <!-- AVATAR (Per ora usiamo il robottino di default, poi faremo l'upload) -->
+                <!-- AVATAR (For now we use the default robot, then we will upload it) -->
                 <Frame CornerRadius="60" HeightRequest="120" WidthRequest="120" HorizontalOptions="Center" Padding="0" IsClippedToBounds="True" Margin="0,20" BorderColor="LightGray">
                     <Image Source="dotnet_bot.png" Aspect="AspectFill"/>
                 </Frame>
 
-                <!-- NOME ED EMAIL -->
+                <!-- NAME ED EMAIL -->
                 <Label Text="{Binding Name}" FontSize="26" FontAttributes="Bold" HorizontalOptions="Center" TextColor="Black"/>
                 <Label Text="{Binding Email}" FontSize="16" TextColor="Gray" HorizontalOptions="Center"/>
 
-                <!-- CARD DELLE STATISTICHE -->
+                <!-- STATISTICS CARD -->
                 <Frame Margin="0,20" Padding="20" CornerRadius="10" HasShadow="True" BorderColor="LightGray" BackgroundColor="White" WidthRequest="300">
                     <VerticalStackLayout Spacing="10">
 
-                        <Label Text="🏆 Reputazione (Ore Donate):" FontAttributes="Bold" FontSize="16" TextColor="Gray"/>
+                        <Label Text="🏆 Reputation (Hrs Donated):" FontAttributes="Bold" FontSize="16" TextColor="Gray"/>
                         <Label Text="{Binding reputation_hour}" FontSize="28" TextColor="#4CAF50" FontAttributes="Bold" HorizontalOptions="Center"/>
 
                         <BoxView HeightRequest="1" Color="LightGray" Margin="0,15"/>
 
-                        <Label Text="🗺️ Quartiere:" FontAttributes="Bold" FontSize="16" TextColor="Gray"/>
+                        <Label Text="🗺️ Neighborhood:" FontAttributes="Bold" FontSize="16" TextColor="Gray"/>
                         <Label Text="{Binding Neighborhood}" FontSize="20" FontAttributes="Bold" TextColor="#2196F3" HorizontalOptions="Center"/>
                     </VerticalStackLayout>
                 </Frame>
 
-                <!-- STORICO -->
+                <!-- HISTORY -->
                 <VerticalStackLayout Spacing="10" WidthRequest="320" Margin="0,10,0,20">
-                    
-                    <!-- I DUE TAB -->
+
+                    <!-- THE TWO TABS -->
                     <Border Stroke="#E0E0E0" StrokeThickness="1" StrokeShape="RoundRectangle 8" Padding="2" BackgroundColor="White">
                         <Grid ColumnDefinitions="*, *">
-                            <Button x:Name="TabMyRequests" Text="My Requests" Clicked="OnTabClicked" BackgroundColor="#2196F3" TextColor="White" CornerRadius="6" HeightRequest="40" FontSize="14" FontAttributes="Bold"/>
-                            <Button x:Name="TabMyContributions" Grid.Column="1" Text="My Contributions" Clicked="OnTabClicked" BackgroundColor="Transparent" TextColor="Gray" CornerRadius="6" HeightRequest="40" FontSize="14" FontAttributes="Bold"/>
+                            <Button x:Name="MyRequestsTab" Text="My Requests" Clicked="OnTabClicked" BackgroundColor="#2196F3" TextColor="White" CornerRadius="6" HeightRequest="40" FontSize="14" FontAttributes="Bold"/>
+                            <Button x:Name="MyContributionsTab" Grid.Column="1" Text="My Contributions" Clicked="OnTabClicked" BackgroundColor="Transparent" TextColor="Gray" CornerRadius="6" HeightRequest="40" FontSize="14" FontAttributes="Bold"/>
                         </Grid>
                     </Border>
                     
-                    <!-- LA LISTA -->
-                    <CollectionView x:Name="StoricoCollection">
+                    <!-- THE LIST -->
+                    <CollectionView x:Name="HistoryCollection">
                         <CollectionView.ItemTemplate>
-                            <DataTemplate x:DataType="models:Richiesta">
+                            <DataTemplate x:DataType="models:Request">
 
                                 <Frame Margin="0,5,0,10" Padding="15" CornerRadius="8" BorderColor="#E0E0E0" HasShadow="False" BackgroundColor="White">
                                     <Frame.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="OnRichiestaTapped"/>
+                                        <TapGestureRecognizer Tapped="OnRequestTapped"/>
                                     </Frame.GestureRecognizers>
 
                                     <VerticalStackLayout Spacing="5">
@@ -63,10 +63,10 @@
                                             <Label Text="•" FontSize="12" TextColor="Gray"/>
                                             <Label Text="{Binding estimated_duration, StringFormat='{0} hrs'}" FontSize="12" TextColor="Gray"/>
                                         </HorizontalStackLayout>
-                                        
-                                        <!-- TARGHETTA -->
-                                        <Border BackgroundColor="{Binding ColoreStato}" StrokeThickness="0" StrokeShape="RoundRectangle 5" Padding="8,4" HorizontalOptions="Start" Margin="0,5,0,0">
-                                            <Label Text="{Binding StatoVisuale}" FontSize="12" FontAttributes="Bold" TextColor="White"/>
+
+                                        <!-- PLATE -->
+                                        <Border BackgroundColor="{Binding StateColor}" StrokeThickness="0" StrokeShape="RoundRectangle 5" Padding="8,4" HorizontalOptions="Start" Margin="0,5,0,0">
+                                            <Label Text="{Binding VisualState}" FontSize="12" FontAttributes="Bold" TextColor="White"/>
                                         </Border>
                                     </VerticalStackLayout>
                                 </Frame>
@@ -86,7 +86,7 @@
         <Grid x:Name="LoadingOverlay" BackgroundColor="#80000000" IsVisible="False" ZIndex="999">
             <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="15">
                 <ActivityIndicator IsRunning="True" Color="#4CAF50" WidthRequest="60" HeightRequest="60"/>
-                <Label Text="Caricamento in corso..." TextColor="White" FontAttributes="Bold" FontSize="18" HorizontalOptions="Center"/>
+                <Label Text="Loading..." TextColor="White" FontAttributes="Bold" FontSize="18" HorizontalOptions="Center"/>
             </VerticalStackLayout>
         </Grid>
 

@@ -9,9 +9,6 @@ namespace Needy.Models
 {
     public class User : BaseModel
     {
-        // The unique ID that PocketBase gives to each user (e.g., "k2g4ekefa...")
-
-
         // The complete name of the user
         [JsonPropertyName("name")]
         public string Name { get; set; }

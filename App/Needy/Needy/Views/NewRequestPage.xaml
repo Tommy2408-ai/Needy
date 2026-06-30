@@ -1,68 +1,68 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Needy.Views.NuovaRichiestaPage"
-             Title="Chiedi Aiuto"
+             x:Class="Needy.Views.NewRequestPage"
+             Title="Ask for Help"
              BackgroundColor="#F5F5F5">
 
     <ScrollView Padding="20">
         <VerticalStackLayout Spacing="20">
             
             <Label 
-            Text="Di cosa hai bisogno?"
+            Text="What do you need?"
                 FontSize="24"
                 FontAttributes="Bold"
                 TextColor="#333333"/>
             
-            <!-- TITOLO -->
-            <Label Text="Titolo" FontAttributes="Bold"/>
+            <!-- TITLE -->
+            <Label Text="Title" FontAttributes="Bold"/>
             <Border Stroke="#CCCCCC" StrokeThickness="1" StrokeShape="RoundRectangle 8" Padding="5">
-                <Entry x:Name="TitoloEntry"
-                       Placeholder="Es. Spesa al supermercato"
+                <Entry x:Name="TitleEntry"
+                       Placeholder="Ex. Shopping at the supermarket"
                        BackgroundColor="White"
                        TextColor="Black"/>
             </Border>
             
-            <!-- CATEGORIA -->
-            <Label Text="Categoria" FontAttributes="Bold"/>
+            <!-- CATEGORY -->
+            <Label Text="Category" FontAttributes="Bold"/>
             <Border Stroke="#CCCCCC" StrokeThickness="1" StrokeShape="RoundRectangle 8" Padding="5">
-                <Picker x:Name="CategoriaPicker" BackgroundColor="White" TextColor="Black">
+                <Picker x:Name="CategoryPicker" BackgroundColor="White" TextColor="Black">
                     <Picker.Items>
-                        <x:String>Spesa</x:String>
-                        <x:String>Compagnia</x:String>
+                        <x:String>Shopping</x:String>
+                        <x:String>Companionship</x:String>
                         <x:String>Tech</x:String>
-                        <x:String>Casa</x:String>
+                        <x:String>Home</x:String>
                     </Picker.Items>
                 </Picker>
             </Border>
             
-            <!-- DESCRIZIONE -->
-            <Label Text="Descrizione dettagliata" FontAttributes="Bold"/>
+            <!-- DESCRIPTION -->
+            <Label Text="Detailed description" FontAttributes="Bold"/>
             <Border Stroke="#CCCCCC" StrokeThickness="1" StrokeShape="RoundRectangle 8" Padding="5">
-                <Editor x:Name="DescrizioneEditor"
-                        Placeholder="Scrivi qui i dettagli (es. la lista della spesa o l'orario in cui ci sei)..."
+                <Editor x:Name="DescriptionEditor"
+                        Placeholder="Write your details here (e.g. your shopping list or the time you'll be there)..."
                         HeightRequest="120"
                         BackgroundColor="White"
                         TextColor="Black"/>
             </Border>
             
-            <!-- DURATA STIMATA -->
-            <Label Text="Durata stimata (in ore)" FontAttributes="Bold"/>
+            <!-- ESTIMATED DURATION -->
+            <Label Text="Estimated duration (in hrs)" FontAttributes="Bold"/>
             <Border Stroke="#CCCCCC" StrokeThickness="1" StrokeShape="RoundRectangle 8" Padding="5">
-                <Entry x:Name="DurataEntry"
+                <Entry x:Name="DurationEntry"
                        Keyboard="Numeric"
-                       Placeholder="Es. 1"
+                       Placeholder="Ex. 1"
                        BackgroundColor="White"
                        TextColor="Black"/>
             </Border>
-            
-            <!-- MESSAGGIO ERRORE/SUCCESSO -->
+
+            <!-- ERROR/SUCCESS MESSAGE -->
             <Label x:Name="StatusLabel" IsVisible="False" FontAttributes="Bold" HorizontalOptions="Center"/>
             
-            <!-- BOTTONE -->
-            <Button x:Name="PubblicaButton"
-                    Text="PUBBLICA RICHIESTA"
-                    Clicked="OnPubblicaClicked"
+            <!-- BUTTON -->
+            <Button x:Name="PublishButton"
+                    Text="PUBLISH REQUEST"
+                    Clicked="OnPublishClicked"
                     BackgroundColor="#4CAF50"
                     TextColor="White"
                     FontAttributes="Bold"

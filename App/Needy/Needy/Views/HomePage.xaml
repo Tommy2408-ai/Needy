@@ -3,37 +3,36 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Needy.Views.HomePage"
              NavigationPage.HasNavigationBar="False"
-             Title="Bacheca Needy"
              BackgroundColor="#F5F5F5">
 
     <Grid>
 
         <Grid RowDefinitions="Auto, *, Auto" Padding="20">
 
-            <!-- RIGA 0: HEADER + TITOLO BACHECA -->
+            <!-- ROW 0: HEADER + NOTICE BOARD TITLE -->
             <VerticalStackLayout Grid.Row="0" Spacing="15" Margin="0,0,0,15">
                 <Grid ColumnDefinitions="*, Auto" VerticalOptions="Center" ColumnSpacing="15">
-                    <!-- NUOVA BARRA SUPERIORE -->
+                    <!-- TOP BAR -->
                     <Border x:Name="HeaderView" Grid.Column="0" Padding="15" StrokeShape="RoundRectangle 10" BackgroundColor="White" Stroke="#E0E0E0" StrokeThickness="1">
 
                         <Border.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnProfiloClicked"/>
+                            <TapGestureRecognizer Tapped="OnProfileClicked"/>
                         </Border.GestureRecognizers>
 
                         <Grid ColumnDefinitions="Auto, *, Auto" VerticalOptions="Center">
 
-                            <!-- FOTO PROFILO -->
+                            <!-- PROFILE PHOTO -->
                             <Image Grid.Column="0" Source="dotnet_bot.png" WidthRequest="40" HeightRequest="40"/>
 
-                            <!-- SALUTO E NOME -->
+                            <!-- GREETING AND NAME -->
                             <VerticalStackLayout Grid.Column="1" Margin="10,0,0,0" VerticalOptions="Center">
-                                <Label Text="Ciao," FontSize="12" TextColor="Gray"/>
+                                <Label Text="Hi," FontSize="12" TextColor="Gray"/>
                                 <Label Text="{Binding Name}" FontSize="18" FontAttributes="Bold" TextColor="Black"/>
                             </VerticalStackLayout>
 
-                            <!-- ORE NEL PORTAFOGLIO -->
+                            <!-- HOURS IN THE PROFILE -->
                             <VerticalStackLayout Grid.Column="2" VerticalOptions="Center" HorizontalOptions="End">
-                                <Label Text="{Binding reputation_hour, StringFormat='{0} ore'}" FontSize="18" FontAttributes="Bold" TextColor="#4CAF50"/>
+                                <Label Text="{Binding reputation_hour, StringFormat='{0} hrs'}" FontSize="18" FontAttributes="Bold" TextColor="#4CAF50"/>
                             </VerticalStackLayout>
 
                         </Grid>
@@ -42,44 +41,42 @@
                     <Grid Grid.Column="1">
                         <Label Text="🔔" FontSize="22" VerticalOptions="Center">
                             <Label.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnNotificheClicked"/>
+                                <TapGestureRecognizer Tapped="OnNotificationsClicked"/>
                             </Label.GestureRecognizers>
                         </Label>
 
-                        <Frame x:Name="PallinoNotifiche" IsVisible="False" BackgroundColor="Red" CornerRadius="6" WidthRequest="12" HeightRequest="12" HorizontalOptions="End" VerticalOptions="Start" HasShadow="False" Padding="0" Margin="0,-2,-2,0"/>
+                        <Frame x:Name="NotificationBadge" IsVisible="False" BackgroundColor="Red" CornerRadius="6" WidthRequest="12" HeightRequest="12" HorizontalOptions="End" VerticalOptions="Start" HasShadow="False" Padding="0" Margin="0,-2,-2,0"/>
                     </Grid>
                 </Grid>
 
-                <!-- TITOLO DELLA BACHECA -->
+                <!-- TITLE -->
                 <VerticalStackLayout Spacing="5">
-                    <Label Text="🏠 Bacheca di quartiere" FontSize="24" FontAttributes="Bold" TextColor="#333333"/>
-                    <Label Text="Ecco chi ha bisogno di aiuto vicino a te:" FontSize="16" TextColor="Gray"/>
+                    <Label Text="🏠 Community Board" FontSize="24" FontAttributes="Bold" TextColor="#333333"/>
+                    <Label Text="People needing help near you:" FontSize="16" TextColor="Gray"/>
                 </VerticalStackLayout>
 
             </VerticalStackLayout>
 
-            <!-- LA LISTA DELLE RICHIESTE (CollectionView) -->
-            <!-- Questa è la "magia" che crea una card per ogni richiesta scaricata -->
-            <CollectionView x:Name="RichiesteCollection" Grid.Row="1">
+            <!-- THE LIST OF REQUESTS (CollectionView) -->
+            <CollectionView x:Name="RequestsCollection" Grid.Row="1">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <!-- DISEGNO DELLA SINGOLA CARD -->
+                        <!-- SINGLE CARD DESIGN -->
                         <Frame Margin="0,0,0,15" Padding="15" CornerRadius="10" BorderColor="LightGray" HasShadow="True" BackgroundColor="White">
 
                             <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnRichiestaTapped"/>
+                                <TapGestureRecognizer Tapped="OnRequestTapped"/>
                             </Frame.GestureRecognizers>
 
                             <VerticalStackLayout Spacing="5">
-                                <!-- Binding collega la grafica ai dati del file Richiesta.cs (scritto in minuscolo!) -->
                                 <Label Text="{Binding title}" FontAttributes="Bold" FontSize="18" TextColor="Black"/>
                                 <Label Text="{Binding category}" FontSize="14" TextColor="#2196F3" FontAttributes="Bold"/>
                                 <Label Text="{Binding description}" FontSize="14" TextColor="#333333" MaxLines="2" LineBreakMode="TailTruncation"/>
 
                                 <HorizontalStackLayout Spacing="10" Margin="0,10,0,0">
-                                    <Label Text="Durata stimata:" FontSize="12" TextColor="Gray"/>
+                                    <Label Text="Estimated duration:" FontSize="12" TextColor="Gray"/>
                                     <Label Text="{Binding estimated_duration}" FontSize="12" FontAttributes="Bold" TextColor="Black"/>
-                                    <Label Text="ore" FontSize="12" TextColor="Black"/>
+                                    <Label Text="hrs" FontSize="12" TextColor="Black"/>
                                 </HorizontalStackLayout>
                             </VerticalStackLayout>
                         </Frame>
@@ -87,21 +84,20 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
-            <!-- BOTTONI IN FONDO -->
+            <!-- BUTTONS AT THE BOTTOM -->
             <HorizontalStackLayout Grid.Row="2" Spacing="15" HorizontalOptions="Center" Margin="0,15,0,0">
-                <Button Text="ESCI" Clicked="OnLogoutClicked" BackgroundColor="#E53935" TextColor="White" CornerRadius="8" WidthRequest="100"/>
-                <!--<Button Text="PROFILO" Clicked="OnProfiloClicked" BackgroundColor="#2196F3" TextColor="White" FontAttributes="Bold" CornerRadius="8" WidthRequest="90"/>-->
-                <Button Text="+ AIUTO" Clicked="OnNuovaRichiestaClicked" BackgroundColor="#4CAF50" TextColor="White" FontAttributes="Bold" CornerRadius="8" WidthRequest="120"/>
+                <Button Text="LOGOUT" Clicked="OnLogoutClicked" BackgroundColor="#E53935" TextColor="White" CornerRadius="8" WidthRequest="100"/>
+                <Button Text="+ REQUEST HELP" Clicked="OnNewRequestClicked" BackgroundColor="#4CAF50" TextColor="White" FontAttributes="Bold" CornerRadius="8" WidthRequest="145"/>
             </HorizontalStackLayout>
 
         </Grid>
-        
-        <!-- OVERLAY DI CARICAMENTO -->
+
+        <!-- LOADING OVERLAY -->
         <Grid x:Name="LoadingOverlay" BackgroundColor="#80000000" IsVisible="False" ZIndex="999">
 
             <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="15">
                 <ActivityIndicator IsRunning="True" Color="#4CAF50" WidthRequest="60" HeightRequest="60"/>
-                <Label Text="Caricamento in corso..." TextColor="White" FontAttributes="Bold" FontSize="18" HorizontalOptions="Center"/>
+                <Label Text="Loading..." TextColor="White" FontAttributes="Bold" FontSize="18" HorizontalOptions="Center"/>
             </VerticalStackLayout>
             
         </Grid>

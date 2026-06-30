@@ -9,7 +9,7 @@
         <VerticalStackLayout Spacing="25" Padding="30" VerticalOptions="Center">
 
             <!-- LOGO OR TITLE (Large and legible) -->
-            <Image Source="dotnet_bot.png" HeightRequest="150" HorizontalOptions="Center"/>
+            <Image Source="neighbors.png" HeightRequest="150" HorizontalOptions="Center"/>
 
             <Label Text="Welcome to Needy" FontSize="28" FontAttributes="Bold" TextColor="#333333" HorizontalOptions="Center"/>
 
@@ -17,18 +17,18 @@
 
             <!-- ENTRY FIELDS (Large for easy touching) -->
             <Border Stroke="#CCCCCC" StrokeThickness="1" StrokeShape="RoundRectangle 10" Padding="5">
-                <Entry x:Name="EmailEntry" Placeholder="Enter your email address" Keyboard="Email" FontSize="18" BackgroundColor="White" TextColor="Black"/>
+                <Entry x:Name="EmailEntry" Placeholder="Enter your Email" Keyboard="Email" FontSize="18" BackgroundColor="White" TextColor="Black"/>
             </Border>
 
             <Border Stroke="#CCCCCC" StrokeThickness="1" StrokeShape="RoundRectangle 10" Padding="5">
-                <Entry x:Name="PasswordEntry" Placeholder="Enter your password" IsPassword="True" FontSize="18" BackgroundColor="White" TextColor="Black"/>
+                <Entry x:Name="PasswordEntry" Placeholder="Enter your Password" IsPassword="True" FontSize="18" BackgroundColor="White" TextColor="Black"/>
             </Border>
 
-            <!-- ENTER BUTTON -->
-            <Button x:Name="LoginButton" Text="ENTER" Clicked="OnLoginButtonClicked" FontAttributes="Bold" FontSize="20" HeightRequest="60" CornerRadius="10" BackgroundColor="#2196F3" TextColor="White" Margin="0,20,0,0"/>
+            <!-- LOGIN BUTTON -->
+            <Button x:Name="LoginButton" Text="LOGIN" Clicked="OnLoginButtonClicked" FontAttributes="Bold" FontSize="20" HeightRequest="60" CornerRadius="10" BackgroundColor="#2196F3" TextColor="White" Margin="0,20,0,0"/>
 
             <!-- REGISTRATION -->
-            <Label Text="Don't have an account? Register" FontSize="16" TextColor="#2196F3" HorizontalOptions="Center" TextDecorations="Underline">
+            <Label Text="Don't have an account? Sign up" FontSize="16" TextColor="#2196F3" HorizontalOptions="Center" TextDecorations="Underline">
                 <Label.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnRegisterTapped"/>
                 </Label.GestureRecognizers>

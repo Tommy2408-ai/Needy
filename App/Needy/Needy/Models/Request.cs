@@ -7,7 +7,7 @@ using pocketbase_csharp_sdk.Models;
 namespace Needy.Models
 {
 #pragma warning disable IDE1006
-    public class Richiesta : BaseModel
+    public class Request : BaseModel
     {
         [JsonPropertyName("title")]
         public string title { get; set; }
@@ -43,10 +43,10 @@ namespace Needy.Models
         public string MyRule { get; set; }
 
         [JsonIgnore]
-        public string StatoVisuale { get; set; }
+        public string VisualState { get; set; }
 
         [JsonIgnore]
-        public string ColoreStato {  get; set; }
+        public string StateColor {  get; set; }
 
         [JsonIgnore]
         public bool IsMyRequest {  get; set; }

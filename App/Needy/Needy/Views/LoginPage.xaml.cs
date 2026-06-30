@@ -15,54 +15,48 @@ namespace Needy.Views
         // Variable for PocketBase that contains the connection
         private readonly PocketBase _pb;
 
-        // Quando MAUI apre questa pagina, vede che ha bisogno di un "PocketBase".
-        // Va a prenderlo da MauiPrograms.cs e ce lo "inietta" qui dentro tramite la variabile (pb).
+        // When MAUI opens this page, it sees that it needs a "PocketBase".
+        // It goes and gets it from MauiPrograms.cs and "injects" it into here via the (pb) variable.
         public LoginPage(PocketBase pb)
         {
             InitializeComponent();
 
-            // Salviamo la connessione globale nella nostra variabile privata
+            // We save the global connection in our private variable
             _pb = pb;
         }
 
-        // Questo è l'evento che parte quando clicchi "ENTRA"
+        // This is the event that starts when you click "ENTER"
         private async void OnLoginButtonClicked(object sender, EventArgs e)
         {
-            // Nascondiamo vecchi errori e blocchiamo il bottone
+            // We hide old mistakes and block the button
             ErrorLabel.IsVisible = false;
             LoginButton.IsEnabled = false;
-            LoginButton.Text = "ACCESSO IN CORSO...";
+            LoginButton.Text = "LOGIN IN PROGRESS...";
 
             string email = EmailEntry.Text;
             string password = PasswordEntry.Text;
 
             try
             {
-                // AZIONE 2: LA CHIAMATA
-                // Usiamo <Needy.Models.User> per dire a PocketBase di trasformare i dati
-                // direttamente nella classe
+                // ACTION 2: THE CALL
+                // We use <Needy.Models.User> to tell PocketBase to transform the data directly into the class
                 var authData = await _pb.User.AuthenticateWithPasswordAsync(email, password);
 
-                // AZIONE 3: IL SEMAFORO
-                // Adesso che i dati sono arrivati, dobbiamo estrarre l'utente.
-                // authData di solito contiene il "Token" e il "User" o "Record".
-                // Scrivi "authData." su Visual Studio e guarda cosa ti suggerisce! Di solito è authData.User o authData.Record.
+                // ACTION 3: THE TRAFFIC LIGHT
+                // Now that the data has arrived, we need to extract the user.
 
-                // (Assumiamo che la proprietà si chiami User, modificala se Visual Studio ti suggerisce Record)
-                var utenteLoggato = authData.Value;
+                var loggedInUser = authData.Value;
 
-                // Ora controllare is_verified è facilissimo perché è nella nostra classe!
-                if (utenteLoggato != null && utenteLoggato.Record.Verified == true)
+                if (loggedInUser != null && loggedInUser.Record.Verified == true)
                 {
-                    // VERDE! L'Admin lo ha accettato.
-                    //await DisplayAlert("Benvenuto", $"Accesso eseguito con successo, {utenteLoggato.Record.Username}!", "OK");
+                    // GREEN! The Admin has accepted it.
 
-                    // 1. Salviamo il Token segreto nella cassaforte del telefono
+                    // 1. Save the secret token in your phone's vault
                     await SecureStorage.Default.SetAsync("auth_token", _pb.AuthStore.Token);
 
-                    await SecureStorage.Default.SetAsync("mio_id", utenteLoggato.Record.Id);
+                    await SecureStorage.Default.SetAsync("my_id", loggedInUser.Record.Id);
 
-                    // Usiamo MainThread per cambiare pagina ed evitare crash su Android
+                    // We use MainThread to change pages and avoid crashes on Android.
                     MainThread.BeginInvokeOnMainThread(() =>
                     {
                         Application.Current.MainPage = new NavigationPage(new HomePage(_pb));
@@ -70,34 +64,32 @@ namespace Needy.Views
                 }
                 else
                 {
-                    // GIALLO! Password giusta, ma Admin non ha ancora accettato (isVerified = false)
-                    _pb.AuthStore.Clear(); // Lo disconnettiamo subito per sicurezza del lato app
+                    // YELLOW! Password correct, but Admin hasn't accepted it yet (isVerified = false)
+                    _pb.AuthStore.Clear(); // We disconnect it immediately for app security
 
-                    ErrorLabel.Text = "Il tuo account è in attesa di approvazione da un amministratore.";
+                    ErrorLabel.Text = "Your account is pending approval by an administrator.";
                     ErrorLabel.IsVisible = true;
                 }
             }
             catch (Exception ex)
             {
-                // ROSSO! Qualcosa è andato storto (Email errata, Password errata, o Server spento)
-                // Se vuoi vedere l'errore tecnico per te, puoi scommentare la riga sotto:
-                // await DisplayAlert("Errore di Sistema", ex.Message, "OK");
+                // RED! Something went wrong (Wrong email, wrong password, or server down)
+                // If you'd like to see the technical error for yourself, you can comment out the line below:
+                // await DisplayAlert("System Error", ex.Message, "OK");
 
-                ErrorLabel.Text = "Email o Password errati, oppure server non raggiungibile.";
+                ErrorLabel.Text = "Incorrect email or password, or server unreachable.";
                 ErrorLabel.IsVisible = true;
             }
             finally
             {
-                // Questo blocco viene eseguito SEMPRE alla fine, sia in caso di successo che di errore
-                // Riaccendiamo il bottone
                 LoginButton.IsEnabled = true;
-                LoginButton.Text = "ENTRA";
+                LoginButton.Text = "LOGIN";
             }
         }
 
         private async void OnRegisterTapped(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new RegistrazionePage(_pb));
+            await Navigation.PushAsync(new RegistrationPage(_pb));
         }
     }
 }

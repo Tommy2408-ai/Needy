@@ -23,15 +23,15 @@ namespace Needy
             // AGGIUNGI QUESTA RIGA: Diciamo all'app che esiste anche la HomePage
             builder.Services.AddTransient<HomePage>();
 
-            builder.Services.AddTransient<NuovaRichiestaPage>();
+            builder.Services.AddTransient<NewRequestPage>();
 
-            builder.Services.AddTransient<ProfiloPage>();
+            builder.Services.AddTransient<ProfilePage>();
 
-            builder.Services.AddTransient<NotifichePage>();
+            builder.Services.AddTransient<NotificationsPage>();
             
-            builder.Services.AddTransient<SceltaCandidatiPage>();
+            builder.Services.AddTransient<CandidatesSelectionPage>();
 
-            builder.Services.AddTransient<RegistrazionePage>();
+            builder.Services.AddTransient<RegistrationPage>();
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif

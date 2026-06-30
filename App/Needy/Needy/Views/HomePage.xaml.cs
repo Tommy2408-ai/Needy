@@ -17,118 +17,114 @@ namespace Needy.Views
 			_pb = pb;
 		}
 
-		// QUESTO EVENTO PARTE OGNI VOLTA CHE LA PAGINA VIENE MOSTRATA A SCHERMO
 		protected override async void OnAppearing()
 		{
 			base.OnAppearing();
 
 			LoadingOverlay.IsVisible = true;
 
-			await CaricaIntestazione();
-			await CaricaRichieste();
+			await LoadHeader();
+			await LoadRequests();
 
 			LoadingOverlay.IsVisible = false;
 		}
 
-		private async Task CaricaIntestazione()
+		private async Task LoadHeader()
 		{
 			try
 			{
-				string mioId = await SecureStorage.Default.GetAsync("mio_id");
+				string myId = await SecureStorage.Default.GetAsync("my_id");
 
-				if (!string.IsNullOrEmpty(mioId))
+				if (!string.IsNullOrEmpty(myId))
 				{
-					 var utente = await _pb.Records.GetOneAsync<User>("users", mioId);
+					 var user = await _pb.Records.GetOneAsync<User>("users", myId);
 
-					if (utente.IsSuccess && utente.Value != null)
+					if (user.IsSuccess && user.Value != null)
 					{
-						HeaderView.BindingContext = utente.Value;
+						HeaderView.BindingContext = user.Value;
 					}
 				}
 			}
 			catch (Exception ex)
 			{
-				System.Diagnostics.Debug.WriteLine("Errore caricamento intestazione: " + ex.Message);
+				System.Diagnostics.Debug.WriteLine("Error loading header: " + ex.Message);
 			}
 		}
 
-		private async Task CaricaRichieste()
+		private async Task LoadRequests()
 		{
 			try
 			{
-				string mioId = await SecureStorage.Default.GetAsync("mio_id");
+				string myId = await SecureStorage.Default.GetAsync("my_id");
 
-				// 1. Chiediamo a PocketBase l'intera lista della collezione "requests"
-				// E la convertiamo automaticamente nella nostra classe <Richiesta>
-				var listaRichieste = await _pb.Records.GetFullListAsync<Richiesta>("requests");
+                // 1. We ask PocketBase for the entire list of the "requests" collection
+                // And we automatically convert it to our <Request> class
+                var requestsList = await _pb.Records.GetFullListAsync<Request>("requests");
 
-				if (listaRichieste.IsSuccess && listaRichieste.Value != null)
+				if (requestsList.IsSuccess && requestsList.Value != null)
 				{
-					var bachecaFiltrata = listaRichieste.Value.Where(r => r.requester != mioId && r.status == "APERTA").ToList();
-					RichiesteCollection.ItemsSource = bachecaFiltrata;
+					var filteredBoard = requestsList.Value.Where(r => r.requester != myId && r.status == "OPEN").ToList();
+					RequestsCollection.ItemsSource = filteredBoard;
 				}
 			}
 			catch (Exception ex)
 			{
-				// Se c'è un errore (es. server spento) lo scriviamo
-				await DisplayAlert("Errore", "Impossibile caricare la bacheca: " + ex.Message, "OK");
+				await DisplayAlert("Error", "Unable to load board: " + ex.Message, "OK");
 			}
 		}
 
 		private void OnLogoutClicked(object sender, EventArgs e)
 		{
-			// 1. Dichiariamo a PocketBase di scordarsi di noi
-			_pb.AuthStore.Clear();
+            // 1. We tell PocketBase to forget about us
+            _pb.AuthStore.Clear();
 
-			// 2. Cancelliamo il token dalla cassaforte del telefono
-			SecureStorage.Default.Remove("auth_token");
+            // 2. Delete the token from the phone vault
+            SecureStorage.Default.Remove("auth_token");
 
-			// 3. Rimandiamo l'utente alla pagina di Login
-			Application.Current.MainPage = new NavigationPage(new LoginPage(_pb));
+            // 3. We redirect the user to the Login page
+            Application.Current.MainPage = new NavigationPage(new LoginPage(_pb));
 		}
 
-		private async void OnNuovaRichiestaClicked(object sender, EventArgs e)
+		private async void OnNewRequestClicked(object sender, EventArgs e)
 		{
-			// Assicuriamo che Navigation sia disponibile
 			if (Navigation != null && Navigation.NavigationStack.Count > 0)
 			{
-				await Navigation.PushAsync(new NuovaRichiestaPage(_pb));
+				await Navigation.PushAsync(new NewRequestPage(_pb));
 			}
 			else
 			{
-				// Fallback: Sostituisci il MainPage se Navigation non è disponibile
-				Application.Current.MainPage = new NavigationPage(new NuovaRichiestaPage(_pb));
+				Application.Current.MainPage = new NavigationPage(new NewRequestPage(_pb));
 			}
 		}
 
-		private async void OnRichiestaTapped(object sender, TappedEventArgs e)
+		private async void OnRequestTapped(object sender, TappedEventArgs e)
 		{
-			// 1. Capiamo quale "Card" (Frame) è stata toccata dal dito dell'utente
-			var frameCliccato = (Frame)sender;
+            // 1. We understand which "Card" (Frame) was touched by the user's finger
+            var clickedFrame = (Frame)sender;
 
-			// 2. Estraiamo i dati (la Richiesta) che MAUI aveva collegato a questa specifica Card
-			var richiestaSelezionata = frameCliccato.BindingContext as Richiesta;
+            // 2. We extract the data (the Request) that MAUI had linked to this specific Card
+            var selectedRequest = clickedFrame.BindingContext as Request;
 
-			// 3. Se abbiamo i dati, partiamo per i Dettagli
-			if (richiestaSelezionata != null)
+            // 3. If we have the data, let's go to the Details
+            if (selectedRequest != null)
 			{
-				await frameCliccato.FadeTo(0.5, 100);
-				await frameCliccato.FadeTo(1, 100);
+				await clickedFrame.FadeTo(0.5, 100);
+				await clickedFrame.FadeTo(1, 100);
 
-				await Navigation.PushAsync(new DettaglioRichiestaPage(richiestaSelezionata, _pb));
+				await Navigation.PushAsync(new RequestDetailsPage(selectedRequest, _pb));
 			}
 
 
 		}
 
-		private async void OnProfiloClicked(object sender, EventArgs e)
+		private async void OnProfileClicked(object sender, EventArgs e)
 		{
-			await Navigation.PushAsync(new ProfiloPage(_pb));
+			await Navigation.PushAsync(new ProfilePage(_pb));
 		}
 
-		private async void OnNotificheClicked(object sender, EventArgs e)
+		private async void OnNotificationsClicked(object sender, EventArgs e)
 		{
-			await Navigation.PushAsync(new NotifichePage(_pb));
+			await Navigation.PushAsync(new NotificationsPage(_pb));
 		}
 	}
 }

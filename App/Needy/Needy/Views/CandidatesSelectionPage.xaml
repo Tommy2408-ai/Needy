@@ -2,18 +2,18 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:models="clr-namespace:Needy.Models"
-             x:Class="Needy.Views.SceltaCandidatiPage"
-             Title="Scegli l'aiutante"
+             x:Class="Needy.Views.CandidatesSelectionPage"
+             Title="Choose the helper"
              BackgroundColor="#F5F5F5">
     
     <VerticalStackLayout Padding="15" Spacing="10">
 
-        <Label Text="Chi vuoi che ti aiuti?" FontSize="22" FontAttributes="Bold" TextColor="#333333" Margin="5,0,0,10"/>
-        <Label Text="Queste persone si sono offerte per la tua richiesta. Scegli quella che preferisci!" FontSize="14" TextColor="Gray" Margin="5,0,0,15"/>
+        <Label Text="Who do you want to help you?" FontSize="22" FontAttributes="Bold" TextColor="#333333" Margin="5,0,0,10"/>
+        <Label Text="These people have volunteered for your request. Choose the one you like best!" FontSize="14" TextColor="Gray" Margin="5,0,0,15"/>
 
-        <CollectionView x:Name="CandidatiCollection">
+        <CollectionView x:Name="CandidatesCollection">
             <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="models:CandidatoInfo">
+                <DataTemplate x:DataType="models:CandidateInfo">
                     <Frame Margin="0,0,0,15" Padding="15" CornerRadius="10" BorderColor="LightGray" HasShadow="True" BackgroundColor="White">
                         <VerticalStackLayout Spacing="10">
                             <Grid ColumnDefinitions="Auto, *, Auto" VerticalOptions="Center">
@@ -23,19 +23,19 @@
                                 </Frame>
 
                                 <VerticalStackLayout Grid.Column="1" Margin="15,0,0,0" VerticalOptions="Center">
-                                    <Label Text="{Binding Utente.Name}" FontAttributes="Bold" FontSize="18" TextColor="Black"/>
+                                    <Label Text="{Binding Candidate.Name}" FontAttributes="Bold" FontSize="18" TextColor="Black"/>
                                     <HorizontalStackLayout Spacing="5" Margin="0,5,0,0">
                                         <Label Text="🏆" FontSize="14"/>
-                                        <Label Text="{Binding Utente.reputation_hour}" FontSize="14" FontAttributes="Bold" TextColor="#4CAF50"/>
-                                        <Label Text="ore donate" FontSize="12" TextColor="Gray" VerticalOptions="Center"/>
+                                        <Label Text="{Binding Candidate.reputation_hour}" FontSize="14" FontAttributes="Bold" TextColor="#4CAF50"/>
+                                        <Label Text="donated hrs" FontSize="12" TextColor="Gray" VerticalOptions="Center"/>
                                     </HorizontalStackLayout>
                                 </VerticalStackLayout>
 
-                                <Button Grid.Column="2" Text="ACCETTA" BackgroundColor="#4CAF50" TextColor="White" FontAttributes="Bold" CornerRadius="8" HeightRequest="40" Clicked="OnScegliCandidatoClicked"/>
+                                <Button Grid.Column="2" Text="ACCEPT" BackgroundColor="#4CAF50" TextColor="White" FontAttributes="Bold" CornerRadius="8" HeightRequest="40" Clicked="OnChooseCandidateClicked"/>
                             </Grid>
 
                             <Frame BackgroundColor="#F0F8FF" BorderColor="Transparent" CornerRadius="8" Padding="10" Margin="0,5,0,0">
-                                <Label Text="{Binding Messaggio, StringFormat='&quot;{0}&quot;'}" FontAttributes="Italic" TextColor="#333333" FontSize="14"/>
+                                <Label Text="{Binding Message, StringFormat='&quot;{0}&quot;'}" FontAttributes="Italic" TextColor="#333333" FontSize="14"/>
                             </Frame>
                             
                         </VerticalStackLayout>
@@ -44,7 +44,7 @@
             </CollectionView.ItemTemplate>
 
             <CollectionView.EmptyView>
-                <Label Text="Nessun candidato trovato." TextColor="Gray" HorizontalOptions="Center" Margin="0,30"/>
+                <Label Text="No candidates found." TextColor="Gray" HorizontalOptions="Center" Margin="0,30"/>
             </CollectionView.EmptyView>
         </CollectionView>
         
