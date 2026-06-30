@@ -174,9 +174,9 @@
   {
     "id": "_pb_users_auth_",
     "listRule": "id = @request.auth.id",
-    "viewRule": "id = @request.auth.id",
+    "viewRule": "",
     "createRule": "",
-    "updateRule": "id = @request.auth.id",
+    "updateRule": "",
     "deleteRule": "id = @request.auth.id",
     "name": "users",
     "type": "auth",
@@ -294,7 +294,6 @@
           "image/jpeg",
           "image/png",
           "image/svg+xml",
-          "image/gif",
           "image/webp"
         ],
         "name": "id_document",
@@ -899,10 +898,10 @@
   },
   {
     "id": "pbc_1976341659",
-    "listRule": null,
-    "viewRule": "@request.auth.id != \"\"",
-    "createRule": null,
-    "updateRule": null,
+    "listRule": "",
+    "viewRule": "",
+    "createRule": "@request.auth.id != \"\"",
+    "updateRule": "",
     "deleteRule": null,
     "name": "requests",
     "type": "base",
@@ -969,10 +968,10 @@
         "system": false,
         "type": "select",
         "values": [
-          "Spesa",
-          "Compagnia",
           "Tech",
-          "Casa"
+          "Shopping",
+          "Home",
+          "Companionship"
         ]
       },
       {
@@ -997,9 +996,9 @@
         "system": false,
         "type": "select",
         "values": [
-          "APERTA",
-          "IN_CORSO",
-          "COMPLETATA"
+          "OPEN",
+          "IN_PROGRESS",
+          "COMPLETED"
         ]
       },
       {
@@ -1027,6 +1026,29 @@
         "required": false,
         "system": false,
         "type": "relation"
+      },
+      {
+        "cascadeDelete": false,
+        "collectionId": "_pb_users_auth_",
+        "hidden": false,
+        "id": "relation1786247180",
+        "maxSelect": 999,
+        "minSelect": 0,
+        "name": "candidates",
+        "presentable": false,
+        "required": false,
+        "system": false,
+        "type": "relation"
+      },
+      {
+        "hidden": false,
+        "id": "json2052873285",
+        "maxSize": 0,
+        "name": "candidate_messages",
+        "presentable": false,
+        "required": false,
+        "system": false,
+        "type": "json"
       }
     ],
     "indexes": [],
