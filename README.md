@@ -20,13 +20,14 @@ Many people (the elderly, busy families, or people with disabilities) occasional
 ## 📸 Screenshots & Architecture
 
 ### Application Architecture
-<img width="7041" height="1465" alt="Diagramma dei Casi d&#39;Uso" src="https://github.com/user-attachments/assets/5c273b4b-0be9-45ed-9c14-0da74a2bd70f" />
+<img width="3099" height="645" alt="Diagramma dei Casi d&#39;Uso" src="https://github.com/user-attachments/assets/aa8e3125-d4bd-4f45-be4e-3a25481f4108" />
 
-<img width="2300" height="2338" alt="Diagramma delle Classi" src="https://github.com/user-attachments/assets/f2063e32-bb48-42d6-967c-e9a803b285e9" />
+<img width="1401" height="1425" alt="Diagramma delle Classi" src="https://github.com/user-attachments/assets/25586090-0663-4ccc-a068-c7db2a156627" />
 
 ### App Interface
-*(Drag and drop a screenshot of the Home/Community Board here)*
-*(Drag and drop a screenshot of the Profile Page here)*
+<img width="996" height="2048" alt="IMG-20260701-WA0000" src="https://github.com/user-attachments/assets/ed7bb6cb-ee66-49d5-bb48-23200f3119fa" />
+
+<img width="996" height="2048" alt="IMG-20260701-WA0001" src="https://github.com/user-attachments/assets/51a2e95d-26d3-4274-8250-582cd90071ef" />
 
 ## 🛠️ Tech Stack
 - **Frontend:** C# / .NET 10 MAUI (Cross-platform: Android, iOS, Windows)
@@ -46,7 +47,7 @@ Many people (the elderly, busy families, or people with disabilities) occasional
 2. Go to **Settings > Import collections**, and load the `pb_schema.json` provided in the Backend folder.
 
 ### 2. App Setup
-- **Option A (Quick Install):** Download the `Needy-Signed.apk` file from this repository and install it directly on an Android device/emulator.
+- **Option A (Quick Install):** Download the apk file from this Google Drive link and install it directly on an Android device/emulator: https://drive.google.com/file/d/1I5MWqTnzsCGxrZqQH4l6EgO4ftH_MBtM/view?usp=sharing
 - **Option B (From Source)**
     1. Open `Needy.slnx` in Visual Studio 2026.
     2. In `MauiProgram.cs`, ensure the PocketBase IP matches your local network IP (e.g., `192.168.1.X:8090` or `10.0.2.2:8090` for the emulator).
@@ -57,6 +58,11 @@ Many people (the elderly, busy families, or people with disabilities) occasional
  - **In-App Chat:** Real-time messaging between requester and helper.
  - **Interactive Map:** Integration with OpenStreetMap to view requests geographically.
  - **Rating System:** A 5-star rating system after request completion.
+
+## ❓ Where can this app be used
+This app was designed for people who need assistance in their daily routines, offering practical help and improving their quality of life. It works particularly well in small buildings, residential complexes, or neighborhoods where community members can easily connect with each other.
+Thanks to its flexible structure, the app can be adapted to different environments and needs, whether in urban areas or small rural towns.
+The inspiration for this idea came from observing everyday life in many Italian small towns, where a large part of the population is elderly. These people often face difficulties with simple tasks such as shopping, managing appointments, or accessing basic services. This app aims to create a supportive network around them, making daily life easier and strengthening the sense of community.
 
 ## 📄 License
 This project is licensed under the **GNU General Public License v3.0**. See the `LICENSE` file for details.
