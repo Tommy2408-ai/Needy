@@ -47,7 +47,7 @@ Many people (the elderly, busy families, or people with disabilities) occasional
 2. Go to **Settings > Import collections**, and load the `pb_schema.json` provided in the Backend folder.
 
 ### 2. App Setup
-- **Option A (Quick Install):** Download the apk file from this Google Drive link and install it directly on an Android device/emulator: https://drive.google.com/file/d/1I5MWqTnzsCGxrZqQH4l6EgO4ftH_MBtM/view?usp=sharing
+- **Option A (Quick Install):** Download the apk file from this Google Drive link and install it directly on an Android device/emulator: https://drive.google.com/file/d/1rsENwSEvYaDaLCTGAZcwYdUwZHmGYel6/view?usp=drivesdk
 - **Option B (From Source)**
     1. Open `Needy.slnx` in Visual Studio 2026.
     2. In `MauiProgram.cs`, ensure the PocketBase IP matches your local network IP (e.g., `192.168.1.X:8090` or `10.0.2.2:8090` for the emulator).
